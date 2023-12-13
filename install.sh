@@ -1,19 +1,35 @@
+#!/bin/bash
+
+# Check system type
+if [ "$(uname)" == "Darwin" ]; then
+  # macOS
+  package_manager="brew"
+  install_command="brew install"
+  uninstall_command="brew uninstall"
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  # Linux
+  package_manager="apt"
+  install_command="sudo apt-get install -y"
+  uninstall_command="sudo apt-get remove -y"
+else
+  echo "Unsupported operating system."
+  exit 1
+fi
+
 # List of files to symlink
 files=(
   ".vimrc"
   ".zshrc"
   ".zshenv"
   ".tmux.conf"
-  ".tmux.conf.bak"
   ".gitconfig"
   ".gitignore"
   ".ideavimrc"
   ".nvimrc"
 )
 
-# Create symlinks and backup existing files
-for file in "${files[@]}"
-do
+# Symlink and backup existing files
+for file in "${files[@]}"; do
   target="$HOME/$file"
   backup="$target.bak"
 
@@ -36,35 +52,13 @@ if [ ! -e "$nvim_config_dir" ]; then
   ln -s "$HOME/.dotfiles/nvim" "$nvim_config_dir"
 fi
 
-# Check if Homebrew is installed
-if ! command -v brew &> /dev/null
-then
-  echo "Homebrew could not be found, installing..."
-  # Install Homebrew
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-  echo "Homebrew is already installed, skipping..."
-fi
-
-# Install required packages
-brew_packages=("git" "tmux" "neovim" "fzf" "zsh" "zplug")
-for package in "${brew_packages[@]}"
-do
-  if ! brew list "$package" &>/dev/null; then
-    echo "Installing $package..."
-    brew install "$package"
-  else
+# Install/Uninstall required packages
+packages=("git" "tmux" "neovim" "fzf" "zsh")
+for package in "${packages[@]}"; do
+  if command -v "$package" &>/dev/null; then
     echo "$package is already installed, skipping..."
+  else
+    echo "Installing $package..."
+    $install_command "$package"
   fi
 done
-
-# Ask user to install powerlevel10k
-echo "Do you want to install powerlevel10k? (y/n)"
-read answer
-if echo "$answer" | grep -iq "^y" ;then
-  echo "Installing powerlevel10k..."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-else
-  echo "Skipping powerlevel10k installation..."
-fi
-
