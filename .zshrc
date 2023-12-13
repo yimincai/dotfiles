@@ -1,4 +1,5 @@
 export ZPLUG_HOME=/opt/homebrew/opt/zplug
+# export ZPLUG_HOME=/usr/local/opt/zplug this is for intel mac
 source $ZPLUG_HOME/init.zsh
 
 zplug romkatv/powerlevel10k, as:theme
@@ -26,6 +27,11 @@ zplug load
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
+
+# ls colors
+alias ls='ls -G'
+export CLICOLOR=1
+export LSCOLORS=gxFxCxDxBxegedabagaced
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
