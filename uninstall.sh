@@ -1,16 +1,6 @@
 #!/bin/bash
 
-# Check system type
-if [ "$(uname)" == "Darwin" ]; then
-  # macOS
-  uninstall_command="brew uninstall"
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  # Linux
-  uninstall_command="sudo apt-get remove -y"
-else
-  echo "Unsupported operating system."
-  exit 1
-fi
+#TODO: Fix Ubuntu not working due to zplug install, permission denied, packer errors etc.
 
 # List of files to uninstall and restore from backup
 files=(
@@ -18,25 +8,28 @@ files=(
   ".zshrc"
   ".zshenv"
   ".tmux.conf"
+  ".tmux.conf.bak"
   ".gitconfig"
   ".gitignore"
   ".ideavimrc"
   ".nvimrc"
 )
 
-# Uninstall packages
-packages=("git" "tmux" "neovim" "fzf" "zsh")
-for package in "${packages[@]}"; do
-  if command -v "$package" &>/dev/null; then
+# Uninstall Homebrew packages
+brew_packages=("git" "tmux" "neovim" "fzf" "zsh" "zplug")
+for package in "${brew_packages[@]}"
+do
+  if brew list "$package" &>/dev/null; then
     echo "Uninstalling $package..."
-    $uninstall_command "$package"
+    brew uninstall "$package"
   else
     echo "$package is not installed, skipping uninstallation..."
   fi
 done
 
 # Restore files from backup and remove symlinks
-for file in "${files[@]}"; do
+for file in "${files[@]}"
+do
   target="$HOME/$file"
   backup="$target.bak"
 
@@ -60,3 +53,11 @@ if [ -L "$nvim_config_dir" ]; then
   echo "Removing symlink for nvim config directory"
   rm "$nvim_config_dir"
 fi
+
+# Remove powerlevel10k if installed
+powerlevel10k_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ -d "$powerlevel10k_dir" ]; then
+  echo "Removing powerlevel10k..."
+  rm -rf "$powerlevel10k_dir"
+fi
+
