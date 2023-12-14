@@ -6,9 +6,7 @@
 files=(
   ".vimrc"
   ".zshrc"
-  ".zshenv"
   ".tmux.conf"
-  ".tmux.conf.bak"
   ".gitconfig"
   ".gitignore"
   ".ideavimrc"
