@@ -81,6 +81,7 @@ alias t="tmux"
 
 # tmux
 alias tmux-sessionizer='~/.dotfiles/scripts/tmux-sessionizer.sh'
+alias vpnItracxing='~/.dotfiles/scripts/vpnItracxing.sh'
 
 # dotfiles
 export DOTFILES=$HOME/.dotfiles

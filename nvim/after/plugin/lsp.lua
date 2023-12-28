@@ -93,6 +93,9 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("i", "<C-a>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
+-- autoformat
+lsp.buffer_autoformat()
+
 lsp.setup()
 
 vim.diagnostic.config({

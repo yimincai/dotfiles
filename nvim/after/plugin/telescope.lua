@@ -1,19 +1,44 @@
---local builtin = require('telescope.builtin')
---vim.keymap.set('n', '<leader>ff', builtin.find_files, { noremap = true, silent = true, hidden = true,  })
---vim.keymap.set('n', '<C-p>', builtin.git_files, {})
---vim.keymap.set('n', '<leader>fg', function()
---	builtin.grep_string({ search = vim.fn.input("Grep > ") })
---end)
---vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+require("telescope").setup({
+    defaults = {
+        prompt_prefix = "🔭 ",
+        selection_caret = " ",
+        sorting_strategy = "ascending",
+        layout_strategy = "horizontal",
+        layout_config = {
+            horizontal = {
+                mirror = false,
+                preview_width = 0.5,
+            },
+            vertical = {
+                mirror = false,
+            },
+        },
+        file_ignore_patterns = { "node_modules", ".git", ".cache", ".DS_Store", ".vscode", ".idea", "mocks" },
+        mappings = {
+            i = {
+                ["<C-k>"] = "move_selection_previous",
+                ["<C-j>"] = "move_selection_next",
+                ["<C-s>"] = "select_vertical",
+                ["<C-a>"] = "select_tab",
+            },
+            n = {
+                ["<C-k>"] = "move_selection_previous",
+                ["<C-j>"] = "move_selection_next",
+                ["<C-s>"] = "select_vertical",
+                ["<C-a>"] = "select_tab",
+            }
+        },
+    },
+})
 
 local map = vim.api.nvim_set_keymap
 local default_opts = { noremap = true }
 
 map('n', '<leader>ff',
-    "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--no-ignore-vcs', '--hidden', '-g', '!.git' }})<cr>",
+    "<cmd>lua require'telescope.builtin'.find_files()<cr>",
     default_opts)
 map('n', '<leader>fb', "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>", default_opts)
-map('n', '<leader>df', "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
+map('n', '<leader>fd', "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
 map('n', '<leader>td', ":TodoTelescope<cr>", default_opts)
 -- map('n', '<leader>/', ":silent grep ", default_opts)
 map('n', '<leader>s', "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
