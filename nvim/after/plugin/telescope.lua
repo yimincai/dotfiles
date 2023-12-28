@@ -2,7 +2,7 @@ require("telescope").setup({
     defaults = {
         prompt_prefix = "🔭 ",
         selection_caret = " ",
-        sorting_strategy = "ascending",
+        sorting_strategy = "descending",
         layout_strategy = "horizontal",
         layout_config = {
             horizontal = {
@@ -34,11 +34,11 @@ require("telescope").setup({
 local map = vim.api.nvim_set_keymap
 local default_opts = { noremap = true }
 
-map('n', '<leader>ff',
+map('n', '<leader>sf',
     "<cmd>lua require'telescope.builtin'.find_files()<cr>",
     default_opts)
-map('n', '<leader>fb', "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>", default_opts)
-map('n', '<leader>fd', "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
+map('n', '<leader>sa', "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>", default_opts)
+map('n', '<leader>sd', "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
 map('n', '<leader>td', ":TodoTelescope<cr>", default_opts)
 -- map('n', '<leader>/', ":silent grep ", default_opts)
-map('n', '<leader>s', "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
+map('n', '<leader>g', "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
