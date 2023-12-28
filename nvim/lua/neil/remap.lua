@@ -67,3 +67,13 @@ vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset=tr
 vim.api.nvim_set_keymap('n', 'zj', ':foldopen!<CR>', { noremap = true, silent = true })  -- fold open all
 -- vim.api.nvim_set_keymap('n', '<leader>zc', ':foldclose<CR>', { noremap = true, silent = true })  -- fold close
 vim.api.nvim_set_keymap('n', 'zk', ':foldclose!<CR>', { noremap = true, silent = true }) -- fold close all
+
+-- Telescope
+local default_opts = { noremap = true }
+vim.api.nvim_set_keymap('n', '<leader>sf', "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_opts)
+vim.api.nvim_set_keymap('n', '<leader>sa', "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>",
+    default_opts)
+vim.api.nvim_set_keymap('n', '<leader>sd', "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
+vim.api.nvim_set_keymap('n', '<leader>td', ":TodoTelescope<cr>", default_opts)
+-- vim.api.nvim_set_keymap('n', '<leader>/', ":silent grep ", default_opts)
+vim.api.nvim_set_keymap('n', '<leader>g', "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
