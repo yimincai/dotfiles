@@ -127,4 +127,5 @@ dmypy.json
 # other plugins or settings from internet
 .tmux/plugins/
 kitty/kitty-themes/
+scripts/vpn.sh
 
