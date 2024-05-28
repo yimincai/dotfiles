@@ -32,9 +32,10 @@ vim.opt.cursorline = true
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
-vim.opt.listchars:append("eol:↲")
+-- vim.opt.listchars:append("eol:↲")
 
-vim.o.foldmethod = "indent"
+vim.opt.foldmethod = "indent"
+vim.opt.foldenable = false
 
 vim.opt.clipboard = "unnamedplus"
 

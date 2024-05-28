@@ -144,15 +144,15 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # rust
 . "$HOME/.cargo/env"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/neil/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/neil/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/neil/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # Fixed the npm canvas install issue
 export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi

@@ -58,15 +58,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>re", "<cmd>Lspsaga finder<CR>", opts)
 		vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 		vim.keymap.set("n", "<F2>", "<cmd>Lspsaga rename<CR>", opts)
-
-		-- local names = table.concat(
-		-- 	vim.tbl_map(function(client)
-		-- 		return client.name
-		-- 	end, vim.lsp.get_active_clients()),
-		-- 	", "
-		-- )
-		--
-		-- vim.notify("LSP attached: " .. names, "info", { title = "LspAttach" })
 	end,
 })
 
@@ -126,12 +117,8 @@ require("mason-lspconfig").setup_handlers({
 		lsp.lua_ls.setup({
 			settings = {
 				lua = {
-					Lua = {
-						completion = {
-							callSnippet = "Replace",
-						},
-						-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-						diagnostics = { disable = { "missing-fields" } },
+					diagnostics = {
+						globals = { "vim" },
 					},
 				},
 			},

@@ -35,6 +35,17 @@ return require("packer").startup(function(use)
 	use({ "ellisonleao/gruvbox.nvim" })
 	use({ "rebelot/kanagawa.nvim" })
 
+	-- go
+
+	use({
+		"ray-x/go.nvim",
+		requires = {
+			"ray-x/guihua.lua", -- recommended if need floating window support
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	})
+
 	-- comments
 	-- use({
 	-- 	"numToStr/Comment.nvim",
@@ -101,13 +112,18 @@ return require("packer").startup(function(use)
 	-- debugger
 	use("folke/neodev.nvim")
 	use("nvim-neotest/nvim-nio")
+
+	-- dap
 	use({
-		"rcarriga/nvim-dap-ui",
-		requires = { "mfussenegger/nvim-dap" },
+		"mfussenegger/nvim-dap",
+		requires = {
+			"rcarriga/nvim-dap-ui",
+			"theHamsta/nvim-dap-virtual-text",
+		},
 	})
-	use("theHamsta/nvim-dap-virtual-text")
 	use("leoluz/nvim-dap-go")
 
+	--
 	use("folke/zen-mode.nvim")
 	use("github/copilot.vim")
 	use("eandrju/cellular-automaton.nvim")
@@ -120,4 +136,20 @@ return require("packer").startup(function(use)
 
 	-- color
 	use("norcalli/nvim-colorizer.lua")
+
+	-- image viewer (only for kitty terminal)
+	-- use("edluffy/hologram.nvim")
+
+	-- cmd window
+	use("MunifTanjim/nui.nvim")
+	use({
+		"folke/noice.nvim",
+		requires = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	})
+
+	-- transparent
+	use({ "xiyaowong/transparent.nvim" })
 end)

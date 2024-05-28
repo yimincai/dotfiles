@@ -139,10 +139,20 @@ _G.packer_plugins = {
     path = "/Users/neil/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["go.nvim"] = {
+    loaded = true,
+    path = "/Users/neil/.local/share/nvim/site/pack/packer/start/go.nvim",
+    url = "https://github.com/ray-x/go.nvim"
+  },
   ["gruvbox.nvim"] = {
     loaded = true,
     path = "/Users/neil/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
     url = "https://github.com/ellisonleao/gruvbox.nvim"
+  },
+  ["guihua.lua"] = {
+    loaded = true,
+    path = "/Users/neil/.local/share/nvim/site/pack/packer/start/guihua.lua",
+    url = "https://github.com/ray-x/guihua.lua"
   },
   ["indent-blankline.nvim"] = {
     loaded = true,
@@ -193,6 +203,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/neil/.local/share/nvim/site/pack/packer/start/neovim",
     url = "https://github.com/rose-pine/neovim"
+  },
+  ["noice.nvim"] = {
+    loaded = true,
+    path = "/Users/neil/.local/share/nvim/site/pack/packer/start/noice.nvim",
+    url = "https://github.com/folke/noice.nvim"
+  },
+  ["nui.nvim"] = {
+    loaded = true,
+    path = "/Users/neil/.local/share/nvim/site/pack/packer/start/nui.nvim",
+    url = "https://github.com/MunifTanjim/nui.nvim"
   },
   nvim = {
     loaded = true,
@@ -315,6 +335,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/neil/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
+  },
+  ["transparent.nvim"] = {
+    loaded = true,
+    path = "/Users/neil/.local/share/nvim/site/pack/packer/start/transparent.nvim",
+    url = "https://github.com/xiyaowong/transparent.nvim"
   },
   ["trouble.nvim"] = {
     loaded = true,
