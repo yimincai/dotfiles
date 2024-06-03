@@ -199,7 +199,13 @@ return {
 
 				["clangd"] = function()
 					lsp.clangd.setup({
-						cmd = { "clangd" },
+						cmd = {
+							"clangd",
+							-- This is a workaround to the limitations of copilot language server
+							-- which only works with utf-16
+							-- https://www.reddit.com/r/neovim/comments/12qbcua/multiple_different_client_offset_encodings/
+							"--offset-encoding=utf-16",
+						},
 						filetypes = { "c", "cpp" },
 						sigle_file_support = true,
 					})
@@ -254,6 +260,7 @@ return {
 				-- Map of filetype to formatters
 				formatters_by_ft = {
 					cpp = { "clang-format" },
+					c = { "clang-format" },
 					lua = { "stylua" },
 					-- Conform will run multiple formatters sequentially
 					go = { "goimports", "gofmt" },
