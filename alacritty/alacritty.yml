@@ -4,7 +4,7 @@ tabspaces: 4
 env:
   TERM: xterm-256color
 window:
-  opacity: 1
+  opacity: 0.9
 
   padding:
     x: 5
@@ -20,7 +20,7 @@ scrolling:
 
 font:
   normal:
-    family: 'JetBrainsMono Nerd Font Mono'
+    family: "JetBrainsMono Nerd Font Mono"
     style: Regular
   size: 13
 
