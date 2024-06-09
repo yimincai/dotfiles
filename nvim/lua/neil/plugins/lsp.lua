@@ -254,6 +254,10 @@ return {
 				["tsserver"] = function()
 					lsp.tsserver.setup({})
 				end,
+
+				["omnisharp"] = function()
+					lsp.omnisharp.setup({})
+				end,
 			})
 
 			require("conform").setup({
