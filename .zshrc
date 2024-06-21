@@ -90,6 +90,7 @@ export DOTFILES=$HOME/.dotfiles
 alias dotfiles='/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # go cover
+# usage: go-cover ./... <- this can replace to any path or relative path
 cover () {
     t="/tmp/go-cover.$$.tmp"
     go test -coverprofile=$t $@ && go tool cover -html=$t && unlink $t

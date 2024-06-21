@@ -258,6 +258,10 @@ return {
 				["omnisharp"] = function()
 					lsp.omnisharp.setup({})
 				end,
+
+				["pbls"] = function()
+					lsp.pbls.setup({})
+				end,
 			})
 
 			require("conform").setup({
