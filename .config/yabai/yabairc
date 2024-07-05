@@ -1,6 +1,8 @@
 # for this to work you must configure sudo such that
 # it will be able to run the command without password
-
+# On arm64, you need to disable SIP to allow yabai to manage windows
+# And run `sudo nvram boot-args=-arm64e_preview_abi` to allow yabai to run on arm64
+# after that, you need to reboot the system to take effect
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 

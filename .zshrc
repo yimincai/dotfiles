@@ -77,7 +77,7 @@ alias vim="nvim"
 alias fp="lsof -i"
 alias yd="youtubedr"
 alias t="tmux"
-
+alias cd="z"
 # tmux
 alias tmux-sessionizer='~/.dotfiles/scripts/tmux-sessionizer.sh'
 alias vpn='~/.dotfiles/scripts/vpn.sh'
@@ -157,3 +157,16 @@ if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/neil/googl
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi
+
+# yazi
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+# zoxide
+eval "$(zoxide init zsh)"

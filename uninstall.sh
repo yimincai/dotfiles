@@ -1,61 +1,121 @@
 #!/bin/bash
 
-#TODO: Fix Ubuntu not working due to zplug install, permission denied, packer errors etc.
+Green='\033[0;32m'
+Red='\033[0;31m'
+Blue='\033[1;34m'
+Yellow='\033[0;33m'
+Reset='\033[0m'
 
-# List of files to uninstall and restore from backup
+# List of files to remove symlink and restore backups
 files=(
-  ".vimrc"
-  ".zshrc"
-  ".tmux.conf"
-  ".gitconfig"
-  ".gitignore"
-  ".ideavimrc"
-  ".nvimrc"
+	".vimrc"
+	".zshrc"
+	".zshenv"
+	".tmux.conf"
+	".tmux"
+	".gitconfig"
+	".gitignore"
+	".ideavimrc"
 )
 
-# Uninstall Homebrew packages
-brew_packages=("git" "tmux" "neovim" "fzf" "zsh" "zplug")
-for package in "${brew_packages[@]}"
-do
-  if brew list "$package" &>/dev/null; then
-    echo "Uninstalling $package..."
-    brew uninstall "$package"
-  else
-    echo "$package is not installed, skipping uninstallation..."
-  fi
-done
+# List of files in the .config directory to remove symlink and restore backups
+files_in_config_folder=(
+	".config/alacritty"
+	".config/borders"
+	".config/kitty"
+	".config/nvim"
+	".config/scripts"
+	".config/sketchybar"
+	".config/skhd"
+	".config/yabai"
+)
 
-# Restore files from backup and remove symlinks
-for file in "${files[@]}"
-do
-  target="$HOME/$file"
-  backup="$target.bak"
+MacOS_uninstallation() {
+	# Remove symlinks and restore backups
+	for file in "${files[@]}"; do
+		target="$HOME/$file"
+		backup="$target.bak"
 
-  # Check if a backup exists
-  if [ -e "$backup" ]; then
-    # Restore the backup
-    echo "Restoring $file from backup"
-    mv "$backup" "$target"
-  fi
+		# Remove symlink if exists
+		if [ -L "$target" ]; then
+			echo -e "${Yellow}Removing symlink for $file${Reset}"
+			rm "$target"
+		fi
 
-  # Remove symlink
-  if [ -L "$target" ]; then
-    echo "Removing symlink for $file"
-    rm "$target"
-  fi
-done
+		# Restore backup if exists
+		if [ -e "$backup" ]; then
+			echo -e "${Green}Restoring backup for $file${Reset}"
+			mv "$backup" "$target"
+		fi
+	done
 
-# Remove symlink for nvim config directory
-nvim_config_dir="$HOME/.config/nvim"
-if [ -L "$nvim_config_dir" ]; then
-  echo "Removing symlink for nvim config directory"
-  rm "$nvim_config_dir"
+	# Remove symlink for config directory and restore backups
+	for file in "${files_in_config_folder[@]}"; do
+		target="$HOME/$file"
+		backup="$target.bak"
+
+		# Remove symlink if exists
+		if [ -L "$target" ]; then
+			echo -e "${Yellow}Removing symlink for $file${Reset}"
+			rm "$target"
+		fi
+
+		# Restore backup if exists
+		if [ -e "$backup" ]; then
+			echo -e "${Green}Restoring backup for $file${Reset}"
+			mv "$backup" "$target"
+		fi
+	done
+
+	# Uninstall Homebrew packages if needed
+	brew_packages=(
+		"font-hack-nerd-font"
+		"wget"
+		"zsh"
+		"tmux"
+		"neovim"
+		"git"
+		"alacritty"
+		"kitty"
+		"koekeishiya/formulae/yabai"
+		"koekeishiya/formulae/skhd"
+		"sketchybar"
+		"neofetch"
+		"bat"
+		"ripgrep"
+		"fd"
+		"fzf"
+		"jq"
+		"htop"
+		"btop"
+		"tree"
+		"nmap"
+		"go"
+		"unzip"
+		"ffmpeg"
+		"youtube-dl"
+		"zplug"
+	)
+
+	for package in "${brew_packages[@]}"; do
+		if brew list "$package" &>/dev/null; then
+			echo -e "${Green}Uninstalling $package...${Reset}"
+			brew uninstall "$package"
+		else
+			echo -e "${Yellow}$package is not installed, skipping...${Reset}"
+		fi
+	done
+
+	echo -e "$Blue}DONE!${Reset}"
+}
+
+# detect OS type
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	echo -e "${Blue}Detected OS Type: Linux${Reset}"
+	echo -e "${Red}Not implemented${Reset}"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	echo -e "${Blue}Detected OS type: MacOS${Reset}"
+	MacOS_uninstallation
+else
+	echo -e "${Red}Unknown OS type or not supported${Reset}"
 fi
-
-# Remove powerlevel10k if installed
-powerlevel10k_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
-if [ -d "$powerlevel10k_dir" ]; then
-  echo "Removing powerlevel10k..."
-  rm -rf "$powerlevel10k_dir"
-fi
-

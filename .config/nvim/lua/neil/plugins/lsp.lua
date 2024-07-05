@@ -117,18 +117,33 @@ return {
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"bashls",
+					"clangd",
+					"cmake",
+					"csharp_ls",
 					"cssls",
+					"denols",
 					"dockerls",
+					"docker_compose_language_service",
+					"eslint",
 					"gopls",
+					"html",
+					"htmx",
 					"jsonls",
+					"lua_ls",
+					"markdown_oxide",
+					"nginx_language_server",
 					"pyright",
+					"rust_analyzer",
+					"sqls",
+					"tailwindcss",
+					"taplo",
+					"templ",
+					"terraformls",
 					"tsserver",
 					"vimls",
-					"yamlls",
-					"eslint",
 					"volar",
-					"templ",
+					"yamlls",
+					"zls",
 				},
 			})
 
@@ -258,10 +273,6 @@ return {
 				["omnisharp"] = function()
 					lsp.omnisharp.setup({})
 				end,
-
-				["pbls"] = function()
-					lsp.pbls.setup({})
-				end,
 			})
 
 			require("conform").setup({
@@ -280,6 +291,7 @@ return {
 					python = { "autoflake" },
 					vue = { "volar", "prettierd" },
 					templ = { "templ" },
+					sh = { "shfmt" },
 
 					-- Use the "*" filetype to run formatters on all filetypes.
 					["*"] = { "codespell" },
