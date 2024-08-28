@@ -15,8 +15,14 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"j-hui/fidget.nvim",
 
+			-- vscode like cmp autocompletion
+			"onsails/lspkind-nvim",
+
 			-- Autoformatting
 			"stevearc/conform.nvim",
+
+			-- Tailwind CSS
+			"roobert/tailwindcss-colorizer-cmp.nvim",
 		},
 		config = function()
 			require("neodev").setup({})
@@ -31,7 +37,53 @@ return {
 			)
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
+			local types = require("luasnip.util.types")
+
+			require("luasnip").setup({
+				history = true,
+				delete_check_events = "TextChanged",
+				-- Display a cursor-like placeholder in unvisited nodes
+				-- of the snippet.
+				ext_opts = {
+					[types.insertNode] = {
+						unvisited = {
+							virt_text = { { "|", "Conceal" } },
+							virt_text_pos = "inline",
+						},
+					},
+				},
+			})
+
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			local tailwindcss_colorizer = require("tailwindcss-colorizer-cmp")
+			local lspkind = require("lspkind")
+
+			-- custom colors for cmp autocompletion and lsp documentation
+			vim.cmd([[
+                highlight CmpFloatBorder guibg=#1e1e1e guifg=#87ceeb
+                highlight DocFloatBorder guibg=#1e1e1e guifg=#d89a1f
+                highlight Pmenu guibg=#1e1e1e guifg=#cfcfcf
+                highlight PmenuSel guibg=#555555 guifg=NONE
+                highlight NormalFloat guibg=#1e1e1e guifg=#cfcfcf
+            ]])
+
 			cmp.setup({
+				window = {
+					completion = {
+						-- border = "rounded",
+						border = { "", "─", "╮", "│", "╯", "─", "╰", "│" },
+
+						-- custom colors
+						winhighlight = "Normal:Pmenu,FloatBorder:CmpFloatBorder,CursorLine:PmenuSel,Search:None",
+					},
+					documentation = {
+						-- border = "rounded",
+						border = { "╭", "─", "", "│", "╯", "─", "╰", "│" },
+						-- custom colors
+						winhighlight = "Normal:NormalFloat,FloatBorder:DocFloatBorder",
+					},
+				},
 				snippet = {
 					expand = function(args)
 						require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
@@ -40,8 +92,22 @@ return {
 				mapping = cmp.mapping.preset.insert({
 					["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
 					["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
+
+					-- select on seleted item, if not seleted, check next one
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							local selected_entry = cmp.get_selected_entry()
+							if not selected_entry then
+								cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+							else
+								cmp.confirm({ select = true })
+							end
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+
 					["<Tab>"] = nil,
-					["<S-Tab>"] = nil,
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<CR>"] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Replace,
@@ -49,11 +115,22 @@ return {
 					}),
 				}),
 				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" }, -- For luasnip users.
+					{ name = "nvim_lsp" }, -- lsp
+					{ name = "luasnip" }, -- luasnip
 				}, {
-					{ name = "buffer" },
+					{ name = "buffer" }, -- buffer
+					{ name = "path" }, -- path
 				}),
+				formatting = {
+					-- vscode like icons for cmp autocompletion
+					format = lspkind.cmp_format({
+						maxwidth = 50,
+						ellipsis_char = "...",
+						-- prepend tailwindcss-colorizer
+						-- add this line to apply color for tailwindcss cmp. if set :highlight PmenuSel will not working on current seleted item
+						before = tailwindcss_colorizer.formatter,
+					}),
+				},
 			})
 
 			-- Global mappings
@@ -94,10 +171,25 @@ return {
 					focusable = false,
 					style = "minimal",
 					border = "rounded",
-					source = "always",
+					source = true,
 					header = "",
 					prefix = "",
 				},
+			})
+
+			-- setup LSP diagnostics border
+			-- see: https://neovim.io/doc/user/lsp.html#lsp-handlers
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+				-- Use a sharp border with `FloatBorder` highlights
+				border = "rounded",
+				-- add the title in hover float window
+				title = "Hover",
+			})
+
+			vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+				-- Use a sharp border with `FloatBorder` highlights
+				border = "rounded",
+				title = "Signature Help",
 			})
 
 			-- diagnostic icons
@@ -110,6 +202,14 @@ return {
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*",
 				callback = function(args)
+					-- if vim.bo.filetype == "vue" then
+					-- 	vim.lsp.buf.format({
+					-- 		bufnr = args.buf,
+					-- 		timeout_ms = 1000,
+					-- 		async = true,
+					-- 	})
+					-- 	return
+					-- end
 					require("conform").format({ bufnr = args.buf })
 				end,
 			})
@@ -121,7 +221,6 @@ return {
 					"cmake",
 					"csharp_ls",
 					"cssls",
-					"denols",
 					"dockerls",
 					"docker_compose_language_service",
 					"eslint",
@@ -172,6 +271,7 @@ return {
 
 				["gopls"] = function()
 					lsp.gopls.setup({
+						cmd = { "gopls", "-remote=auto" },
 						settings = {
 							filetypes = { "go", "gomod", "gowork", "gotmpl" },
 							gopls = {
@@ -192,24 +292,6 @@ return {
 
 				["tailwindcss"] = function()
 					lsp.tailwindcss.setup({})
-				end,
-
-				["volar"] = function()
-					lsp.volar.setup({
-						settings = {
-							volar = {
-								completion = {
-									trigger = {
-										triggercharacters = { ".", ":", "<", '"', "'", "/", "@" },
-									},
-								},
-								autoimport = {
-									enable = true,
-								},
-								indent = 4,
-							},
-						},
-					})
 				end,
 
 				["clangd"] = function()
@@ -266,8 +348,54 @@ return {
 					lsp.pyright.setup({})
 				end,
 
+				-- see: https://github.com/williamboman/mason-lspconfig.nvim/issues/371#issuecomment-2188015156
+				["volar"] = function()
+					lsp.volar.setup({
+						-- NOTE: Uncomment to enable volar in file types other than vue.
+						-- (Similar to Takeover Mode)
+
+						-- filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact", "json" },
+
+						-- NOTE: Uncomment to restrict Volar to only Vue/Nuxt projects. This will enable Volar to work alongside other language servers (tsserver).
+
+						-- root_dir = require("lspconfig").util.root_pattern(
+						--   "vue.config.js",
+						--   "vue.config.ts",
+						--   "nuxt.config.js",
+						--   "nuxt.config.ts"
+						-- ),
+						init_options = {
+							vue = {
+								hybridMode = false,
+							},
+						},
+						-- NOTE: This might not be needed. Uncomment if you encounter issues.
+
+						-- typescript = {
+						--   tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+						-- },
+					})
+				end,
+
+				-- see: https://github.com/williamboman/mason-lspconfig.nvim/issues/371#issuecomment-2188015156
 				["tsserver"] = function()
-					lsp.tsserver.setup({})
+					local mason_packages = vim.fn.stdpath("data") .. "/mason/packages"
+					local volar_path = mason_packages .. "/vue-language-server/node_modules/@vue/language-server"
+					lsp.tsserver.setup({
+						-- NOTE: To enable Hybrid Mode, change hybrideMode to true above and uncomment the following filetypes block.
+						-- WARN: THIS MAY CAUSE HIGHLIGHTING ISSUES WITHIN THE TEMPLATE SCOPE WHEN TSSERVER ATTACHES TO VUE FILES
+
+						-- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+						init_options = {
+							plugins = {
+								{
+									name = "@vue/typescript-plugin",
+									location = volar_path,
+									languages = { "vue" },
+								},
+							},
+						},
+					})
 				end,
 
 				["omnisharp"] = function()
@@ -284,14 +412,16 @@ return {
 					-- Conform will run multiple formatters sequentially
 					go = { "goimports", "gofmt" },
 					-- Use a sub-list to run only the first available formatter
-					javascript = { { "prettierd", "prettier" } },
-					typescript = { { "prettierd", "prettier" } },
+					javascript = { "prettierd", "prettier" },
+					typescript = { "prettierd", "prettier" },
 					proto = { "buf" },
 					-- You can use a function here to determine the formatters dynamically
 					python = { "autoflake" },
-					vue = { "volar", "prettierd" },
+					-- vue = { "volar", "prettierd" },
+					vue = { "prettierd" },
 					templ = { "templ" },
 					sh = { "shfmt" },
+					sql = { "sql_formatter" },
 
 					-- Use the "*" filetype to run formatters on all filetypes.
 					["*"] = { "codespell" },

@@ -5,6 +5,28 @@ return {
 	config = {
 		require("telescope").setup({
 			defaults = {
+				vimgrep_arguments = {
+					"rg",
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+					"--glob",
+					"!**/node_modules/*", -- Ignore node_modules
+					"--glob",
+					"!package-lock.json", -- Ignore package-lock.json
+					"--glob",
+					"!yarn-lock", -- Ignore package-lock.json
+					"--glob",
+					"!go.sum", -- Ignore package-lock.json
+					"--glob",
+					"!**/dist/*", -- Ignore dist directory
+					"--glob",
+					"!.DS_Store", -- Ignore DS_Store files
+				},
+
 				prompt_prefix = "🔭 ",
 				selection_caret = " ",
 				sorting_strategy = "descending",
@@ -30,6 +52,7 @@ return {
 					"%.history/.*",
 					"package-lock.json",
 					"yarn.lock",
+					".nuxt/.*",
 				},
 				mappings = {
 					i = {
@@ -48,7 +71,7 @@ return {
 			},
 			pickers = {
 				find_files = {
-					find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
+					find_command = { "rg", "--files", "--hidden", "--glob", "!.git" },
 				},
 			},
 		}),

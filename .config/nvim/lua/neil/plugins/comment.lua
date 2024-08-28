@@ -20,12 +20,23 @@ return {
 				comment_chunk_text_object = "ic",
 				-- Hook function to call before commenting takes place
 				hook = function()
-					if vim.api.nvim_buf_get_option(0, "filetype") == "templ" then
+					local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+					if filetype == "templ" or filetype == "vue" then
 						vim.api.nvim_buf_set_option(0, "commentstring", "<!-- %s -->")
 					end
-					if vim.api.nvim_buf_get_option(0, "filetype") == "vue" then
-						vim.api.nvim_buf_set_option(0, "commentstring", "<!-- %s -->")
-					end
+
+					-- if filetype == "vue" then
+					-- 	local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+					-- 	for _, line in ipairs(lines) do
+					-- 		if line:match("^%s*<template*") then
+					-- 			vim.api.nvim_buf_set_option(0, "commentstring", "<!-- %s -->")
+					-- 		elseif line:match("^%s*<script*") then
+					-- 			vim.api.nvim_buf_set_option(0, "commentstring", "// %s")
+					-- 		elseif line:match("^%s*<style*") then
+					-- 			vim.api.nvim_buf_set_option(0, "commentstring", "/* %s */")
+					-- 		end
+					-- 	end
+					-- end
 				end,
 			})
 		end,
