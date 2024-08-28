@@ -7,10 +7,26 @@
 # Begin script
 #!/usr/bin/env bash
 
+find_dirs=(
+    ~/Development/Working/backend
+    ~/Development/Working/app
+    ~/Development/Working/cli
+    ~/Development/Working/web
+    ~/Development/Working/others
+    ~/Development/DevOps/itracxing
+    ~/Development/DevOps/tools
+    ~/Development/SideProjects
+    ~/Development/Testing
+    ~/Development/Clones
+    ~/Development/Personal
+)
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/Development/Working/backend ~/Development/Working/app ~/Development/Working/cli ~/Development/Working/web ~/Development/Working/others ~/Development/DevOps/itracxing ~/Development/DevOps/tools ~/Development/SideProjects ~/Development/Testing ~/Development/Clones -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(
+        find "${find_dirs[@]}" -mindepth 1 -maxdepth 1 -type d | fzf
+    )
 fi
 
 if [[ -z $selected ]]; then
@@ -25,7 +41,7 @@ if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
+if ! tmux has-session -t=$selected_name 2>/dev/null; then
     tmux new-session -ds $selected_name -c $selected
 fi
 

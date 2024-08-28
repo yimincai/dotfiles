@@ -1,4 +1,4 @@
 brew services restart borders
-yabai --start-reservice
-skhd --start-reservice
+yabai --restart-service
+skhd --restart-service
 brew services restart sketchybar
