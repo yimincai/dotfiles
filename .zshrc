@@ -79,15 +79,15 @@ alias yd="youtubedr"
 alias t="tmux"
 alias cd="z"
 # tmux
-alias tmux-sessionizer='~/.dotfiles/scripts/tmux-sessionizer.sh'
-alias vpn='~/.dotfiles/scripts/vpn.sh'
+alias tmux-sessionizer='~/.config/scripts/tmux-sessionizer.sh'
+alias vpn='~/.config/scripts/vpn.sh'
 
 # dotfiles
-export DOTFILES=$HOME/.dotfiles
+# export DOTFILES=$HOME/.dotfiles
 # this is for linux
 # alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # this is for mac
-alias dotfiles='/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# alias dotfiles='/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # go cover
 # usage: go-cover ./... <- this can replace to any path or relative path
