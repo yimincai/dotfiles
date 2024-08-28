@@ -3,7 +3,7 @@
 ## Usage
 
 ```
-$ git clone git@github.com:yimincai/dotfiles.git ~/.dotfiles
+$ git clone git@github.com:yimincai/dotfiles.git /path/to/dotfiles
 
 ## install
 $ chmod +x ./install.sh
