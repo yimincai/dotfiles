@@ -422,6 +422,7 @@ return {
 					templ = { "templ" },
 					sh = { "shfmt" },
 					sql = { "sql_formatter" },
+					css = { "prettierd" },
 
 					-- Use the "*" filetype to run formatters on all filetypes.
 					["*"] = { "codespell" },
