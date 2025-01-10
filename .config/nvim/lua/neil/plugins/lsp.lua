@@ -122,6 +122,11 @@ return {
 					{ name = "path" }, -- path
 				}),
 				formatting = {
+					expandable_indicators = {
+						"",
+						"",
+						"",
+					},
 					-- vscode like icons for cmp autocompletion
 					format = lspkind.cmp_format({
 						maxwidth = 50,
@@ -156,10 +161,12 @@ return {
 					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
 					vim.keymap.set("n", "<leader>pd", "<cmd>Lspsaga peek_definition<CR>", opts)
-					vim.keymap.set("n", "<leader>re", "<cmd>Lspsaga hover_doc<CR>", opts)
+					-- vim.keymap.set("n", "<leader>ce", "<cmd>Lspsaga hover_doc<CR>", opts)
 					vim.keymap.set("n", "<leader>cs", "<cmd>Lspsaga outline<CR>", opts)
-					vim.keymap.set("n", "<leader>re", "<cmd>Lspsaga finder<CR>", opts)
+					vim.keymap.set("n", "<leader>gr", "<cmd>Lspsaga finder<CR>", opts)
 					vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
+					vim.keymap.set("n", "<leader>ci", "<cmd>Lspsaga incoming_calls<CR>", opts)
+					vim.keymap.set("n", "<leader>co", "<cmd>Lspsaga incoming_calls<CR>", opts)
 					vim.keymap.set("n", "<F2>", "<cmd>Lspsaga rename<CR>", opts)
 				end,
 			})
@@ -238,7 +245,7 @@ return {
 					"taplo",
 					"templ",
 					"terraformls",
-					"tsserver",
+					-- "tsserver",
 					"vimls",
 					"volar",
 					"yamlls",

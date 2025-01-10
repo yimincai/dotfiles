@@ -28,11 +28,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
 
-# ls colors
-alias ls='ls -G'
-export CLICOLOR=1
-export LSCOLORS=gxFxCxDxBxegedabagaced
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -136,14 +131,14 @@ export JAVA_HOME=/Users/neil/Library/Java/JavaVirtualMachines/azul-19/Contents/H
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# bun completions
+# Bun completions
 [ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
 
-# bun
+# Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# rust
+# Rust
 . "$HOME/.cargo/env"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
@@ -158,7 +153,7 @@ if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/neil/googl
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi
 
-# yazi
+# yazi, a terminal based file manager
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
@@ -168,5 +163,5 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
-# zoxide
+# zoxide, a cd replacement tool
 eval "$(zoxide init zsh)"
