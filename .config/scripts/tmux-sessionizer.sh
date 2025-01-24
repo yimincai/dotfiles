@@ -19,6 +19,19 @@ find_dirs=(
     ~/Development/Testing
     ~/Development/Clones
     ~/Development/Personal
+    ~/Development/Learning/c
+    ~/Development/Learning/cpp
+    ~/Development/Learning/cpplayground
+    ~/Development/Learning/python
+    ~/Development/Learning/js
+    ~/Development/Learning/java
+    ~/Development/Learning/rust
+    ~/Development/Learning/golang
+    ~/Development/Learning/css
+    ~/Development/Learning/vue
+    ~/Development/Learning/react
+    ~/Development/Learning/flutter
+    ~/Development/Learning/video
 )
 
 if [[ $# -eq 1 ]]; then
