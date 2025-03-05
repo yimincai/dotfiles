@@ -69,6 +69,9 @@ vim.keymap.set("n", "<leader>zm", function()
 	end
 end)
 
+-- Lspsaga
+vim.api.nvim_set_keymap("n", "<leader>ll", "<cmd>Lspsaga outline<cr>", { noremap = true, silent = true })
+
 -- Telescope
 local default_opts = { noremap = true }
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_opts)
