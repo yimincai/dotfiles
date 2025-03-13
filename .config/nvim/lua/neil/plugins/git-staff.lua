@@ -1,13 +1,20 @@
 return {
 	{
+		"tpope/vim-fugitive",
+	},
+	{
 
 		"kdheepak/lazygit.nvim",
 		-- optional for floating window border decoration
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
+		config = function() end,
+	},
+	{
+		"lewis6991/gitsigns.nvim",
 		config = function()
-			vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:LazyGit<cr>", { noremap = true, silent = true })
+			require("gitsigns").setup({})
 		end,
 	},
 }

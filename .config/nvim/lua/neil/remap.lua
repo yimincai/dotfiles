@@ -12,6 +12,10 @@ vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+-- next window
+vim.api.nvim_set_keymap("n", "<C-n>", "<C-w>w", { noremap = true, silent = true })
+-- previous window
+vim.api.nvim_set_keymap("n", "<C-p>", "<C-w>p", { noremap = true, silent = true })
 
 -- 使用 <F3> 交換當前視窗和下一個視窗的位置
 vim.api.nvim_set_keymap("n", "<F3>", "<C-w>x", { noremap = true, silent = true })
@@ -84,7 +88,20 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
 vim.api.nvim_set_keymap("n", "<leader>td", ":TodoTelescope<cr>", default_opts)
 -- vim.api.nvim_set_keymap('n', '<leader>/', ":silent grep ", default_opts)
-vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
+vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
+
+-- Lazygit
+vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:LazyGit<cr>", { noremap = true, silent = true })
+
+-- Gitsigns
+vim.api.nvim_set_keymap("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hu", ":Gitsigns undo_stage_hunk<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hR", ":Gitsigns reset_buffer<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hd", ":vertical Gitsigns diffthis<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hD", ":Gitsigns diffthis<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gb", ":Gitsigns blame<CR>", { noremap = true, silent = true })
 
 -- testing
 -- vim.keymap.set("n", "<leader>tt", "<cmd>lua require'neil.scripts'.RunGoTest()<CR>")

@@ -46,7 +46,6 @@ return {
 				no_bookmark = false,
 				custom = {
 					"node_modules",
-					".git",
 					".vscode",
 					".idea",
 					".DS_Store",
