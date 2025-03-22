@@ -8,6 +8,7 @@
 #!/usr/bin/env bash
 
 find_dirs=(
+    ~/Development/GH
     ~/Development/Working/backend
     ~/Development/Working/app
     ~/Development/Working/cli
