@@ -162,7 +162,7 @@ return {
 
 					vim.keymap.set("n", "<leader>pd", "<cmd>Lspsaga peek_definition<CR>", opts)
 					-- vim.keymap.set("n", "<leader>ce", "<cmd>Lspsaga hover_doc<CR>", opts)
-					vim.keymap.set("n", "<leader>cs", "<cmd>Lspsaga outline<CR>", opts)
+					vim.keymap.set("n", "<leader>ll", "<cmd>Lspsaga outline<CR>", opts)
 					vim.keymap.set("n", "<leader>gr", "<cmd>Lspsaga finder<CR>", opts)
 					vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 					vim.keymap.set("n", "<leader>ci", "<cmd>Lspsaga incoming_calls<CR>", opts)

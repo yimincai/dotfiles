@@ -6,6 +6,13 @@ vim.api.nvim_set_keymap("i", "jk", "<Esc>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<F1>", ":bnext<CR>", { noremap = true, silent = true })
 -- 使用 <F1> 切換到前一個文檔
 vim.api.nvim_set_keymap("n", "<F1>", ":bprev<CR>", { noremap = true, silent = true })
+-- 使用 <F3> 交換當前視窗和下一個視窗的位置
+vim.api.nvim_set_keymap("n", "<F3>", "<C-w>x", { noremap = true, silent = true })
+-- 使用 Ctrl+Shift--hjkl 來調整視窗大小
+vim.api.nvim_set_keymap("n", "<C-S-h>", "<C-w><", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-j>", "<C-w>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-k>", "<C-w>-", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-l>", "<C-w>>", { noremap = true, silent = true })
 
 -- use Ctrl-hjkl to switch between windows
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
@@ -16,9 +23,6 @@ vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<C-n>", "<C-w>w", { noremap = true, silent = true })
 -- previous window
 vim.api.nvim_set_keymap("n", "<C-p>", "<C-w>p", { noremap = true, silent = true })
-
--- 使用 <F3> 交換當前視窗和下一個視窗的位置
-vim.api.nvim_set_keymap("n", "<F3>", "<C-w>x", { noremap = true, silent = true })
 
 -- Split window
 vim.api.nvim_set_keymap("n", "<leader>v", ":vsplit<CR>", { noremap = true, silent = true })
@@ -72,9 +76,6 @@ vim.keymap.set("n", "<leader>zm", function()
 		})
 	end
 end)
-
--- Lspsaga
-vim.api.nvim_set_keymap("n", "<leader>ll", "<cmd>Lspsaga outline<cr>", { noremap = true, silent = true })
 
 -- Telescope
 local default_opts = { noremap = true }
