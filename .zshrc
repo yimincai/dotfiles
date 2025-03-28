@@ -74,7 +74,9 @@ alias yd="youtubedr"
 alias t="tmux"
 alias cd="z"
 # tmux
-alias tmux-sessionizer='~/.config/scripts/tmux-sessionizer.sh'
+alias ts='~/.config/scripts/tmux-sessionizer.sh'
+alias tc='~/.config/scripts/tmux-choose-session.sh'
+# vpn
 alias vpn='~/.config/scripts/vpn.sh'
 
 # dotfiles

@@ -8,11 +8,12 @@ vim.api.nvim_set_keymap("n", "<F1>", ":bnext<CR>", { noremap = true, silent = tr
 vim.api.nvim_set_keymap("n", "<F1>", ":bprev<CR>", { noremap = true, silent = true })
 -- 使用 <F3> 交換當前視窗和下一個視窗的位置
 vim.api.nvim_set_keymap("n", "<F3>", "<C-w>x", { noremap = true, silent = true })
+-- 切換所有分割視窗的方向（水平 <-> 垂直）
 -- 使用 Ctrl+Shift--hjkl 來調整視窗大小
-vim.api.nvim_set_keymap("n", "<C-S-h>", "<C-w><", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-j>", "<C-w>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-k>", "<C-w>-", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-S-l>", "<C-w>>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-h>", "<C-w><", { noremap = true, silent = true }) -- shrink width
+vim.api.nvim_set_keymap("n", "<C-S-j>", "<C-w>+", { noremap = true, silent = true }) -- enlarge height
+vim.api.nvim_set_keymap("n", "<C-S-k>", "<C-w>-", { noremap = true, silent = true }) -- shrink height
+vim.api.nvim_set_keymap("n", "<C-S-l>", "<C-w>>", { noremap = true, silent = true }) -- enlarge width
 
 -- use Ctrl-hjkl to switch between windows
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })

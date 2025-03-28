@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #NOTE: You must add the following lines to your bashrc or zshrc
 # alias tmux-sessionizer='~/Linux-Setup-Scripts/scripts/tmux-sessionizer.sh'
 
@@ -5,7 +7,6 @@
 # bindkey -s '^f' 'tmux-sessionizer\n'
 
 # Begin script
-#!/usr/bin/env bash
 
 find_dirs=(
     ~/Development/GH
