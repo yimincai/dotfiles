@@ -19,23 +19,23 @@
 -- 	},
 -- }
 
-return {
-	{
-		"olimorris/onedarkpro.nvim",
-		priority = 1000, -- 確保主題優先載入
-		config = function()
-			require("onedarkpro").setup({
-				colors = {}, -- 你可以在這裡自訂顏色
-				options = {
-					transparency = true, -- 設定背景透明
-					terminal_colors = true, -- 啟用終端機顏色
-					cursorline = true, -- 高亮當前行
-				},
-			})
-			vim.cmd("colorscheme onedark") -- 設定主題
-		end,
-	},
-}
+-- return {
+-- 	{
+-- 		"olimorris/onedarkpro.nvim",
+-- 		priority = 1000, -- 確保主題優先載入
+-- 		config = function()
+-- 			require("onedarkpro").setup({
+-- 				colors = {}, -- 你可以在這裡自訂顏色
+-- 				options = {
+-- 					transparency = true, -- 設定背景透明
+-- 					terminal_colors = true, -- 啟用終端機顏色
+-- 					cursorline = true, -- 高亮當前行
+-- 				},
+-- 			})
+-- 			vim.cmd("colorscheme onedark") -- 設定主題
+-- 		end,
+-- 	},
+-- }
 
 -- return {
 -- 	{
@@ -52,17 +52,17 @@ return {
 -- 	},
 -- }
 
--- return {
--- 	{
--- 		"sainnhe/gruvbox-material",
--- 		name = "gruvbox-material",
--- 		priority = 1000,
--- 		config = function()
--- 			vim.g.gruvbox_material_transparent_background = 1
--- 			vim.cmd("colorscheme gruvbox-material")
--- 		end,
--- 	},
--- }
+return {
+	{
+		"sainnhe/gruvbox-material",
+		name = "gruvbox-material",
+		priority = 1000,
+		config = function()
+			vim.g.gruvbox_material_transparent_background = 1
+			vim.cmd("colorscheme gruvbox-material")
+		end,
+	},
+}
 
 -- bad
 -- return {

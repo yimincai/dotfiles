@@ -11,7 +11,7 @@ family = "JetBrainsMono Nerd Font Mono"
 style = "Regular"
 
 [mouse]
-hide_when_typing = false
+hide_when_typing = true
 
 [scrolling]
 history = 50000

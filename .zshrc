@@ -2,6 +2,8 @@ export ZPLUG_HOME=/opt/homebrew/opt/zplug
 # export ZPLUG_HOME=/usr/local/opt/zplug this is for intel mac
 source $ZPLUG_HOME/init.zsh
 
+export KITTY_SOCK_DIR=/tmp/kitty
+
 zplug romkatv/powerlevel10k, as:theme
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-autosuggestions"
@@ -78,6 +80,15 @@ alias ts='~/.config/scripts/tmux-sessionizer.sh'
 alias tc='~/.config/scripts/tmux-choose-session.sh'
 # vpn
 alias vpn='~/.config/scripts/vpn.sh'
+# file manager
+alias zz='yazi'
+# kitty
+alias ok='~/.config/scripts/kitty_socket.sh'
+alias sbg='~/.config/scripts/kitty_set_bg.sh'
+alias gg='~/.config/scripts/kitty_remove_bg.sh'
+## nsfw
+alias nbgr='nohup ~/.config/scripts/kitty_bg_rand.sh &'
+alias nbg='~/.config/scripts/kitty_set_nsfw_bg.sh'
 
 # dotfiles
 # export DOTFILES=$HOME/.dotfiles
