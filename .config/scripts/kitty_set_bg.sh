@@ -4,30 +4,35 @@ find_dirs=(
     ~/Documents/wallpapers/default
 )
 
-if [[ $# -eq 1 ]]; then
-    selected=$1
-else
-    selected=$(
-        find "${find_dirs[@]}" -mindepth 1 -maxdepth 1 -type f \
-            \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) \
-            -not -name '.DS_Store' |
-            fzf
-    )
-fi
+selected_dir=$(
+    printf "%s\n" "${find_dirs[@]}" | fzf --prompt="Select wallpaper directory: "
+)
 
-if [[ -z $selected ]]; then
+if [[ -z $selected_dir ]]; then
+    echo "No directory selected"
     exit 0
 fi
 
-# set kitty background
-BACKGROUND_IMAGE="$selected"
+selected_image=$(
+    find "$selected_dir" -mindepth 1 -maxdepth 1 -type f \
+        \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) \
+        -not -name '.DS_Store' |
+        fzf --preview "kitty +kitten icat --stdin=detect --clear --place=80x24@140x5 --transfer-mode=memory --stdin < {} > /dev/tty" \
+            --preview-window=right:40%:wrap \
+            --prompt="Select wallpaper image: "
+)
 
-# check if file exists
-if [ -z "$BACKGROUND_IMAGE" ]; then
-    echo "please select a file"
+if [[ -z $selected_image ]]; then
+    echo "No image selected"
+    exit 0
+fi
+
+BACKGROUND_IMAGE="$selected_image"
+
+if [ ! -f "$BACKGROUND_IMAGE" ]; then
+    echo "The selected file does not exist"
     exit 1
 fi
 
-# set background image
-echo "setting background image to $BACKGROUND_IMAGE"
-kitty @ set-background-image "$BACKGROUND_IMAGE"
+echo "Setting background image to $BACKGROUND_IMAGE"
+kitty @ set-background-image "$BACKGROUND_IMAGE" >/dev/null 2>&1 &

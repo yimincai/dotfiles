@@ -1,43 +1,51 @@
 #!/bin/bash
 
-# This script randomly changes the wallpaper in Kitty terminal.
+# define wallpaper directories
 WALLPAPER_DIRS=(
-    # add your wallpaper directories here
     "$HOME/Music/NSFW/wallpapers/h"
-    # "$HOME/Music/NSFW/wallpapers/r-h"
+    "$HOME/Music/NSFW/wallpapers/r-h"
 )
 
-# set the interval in seconds
-INTERVAL=30
+# use fzf to select a wallpaper directory
+SELECTED_DIR=$(printf '%s\n' "${WALLPAPER_DIRS[@]}" | fzf --prompt="Select a wallpaper directory: ")
 
-# collect all wallpapers from the specified directories
-WALLPAPERS=()
-for DIR in "${WALLPAPER_DIRS[@]}"; do
-    if [ -d "$DIR" ]; then
-        while IFS= read -r -d '' file; do
-            WALLPAPERS+=("$file")
-        done < <(find "$DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) -print0)
-    else
-        echo "Folder $DIR does not exist."
-    fi
-done
-
-echo "Found ${#WALLPAPERS[@]} wallpapers in the specified folders, interval: $INTERVAL seconds."
-
-# check if any wallpapers were found
-if [ ${#WALLPAPERS[@]} -eq 0 ]; then
-    echo "No wallpapers found in the specified folders."
+# check if a directory was selected
+if [ -d "$SELECTED_DIR" ]; then
+    echo "Selected directory: $SELECTED_DIR"
+else
+    echo "No valid directory selected. Exiting."
     exit 1
 fi
 
-# change_wallpaper function
-change_wallpaper() {
-    local random_wallpaper="${WALLPAPERS[RANDOM % ${#WALLPAPERS[@]}]}"
-    kitty @ set-background-image "$random_wallpaper"
-}
+# collect all wallpaper files in the selected directory
+WALLPAPERS=()
+while IFS= read -r -d '' file; do
+    WALLPAPERS+=("$file")
+done < <(find "$SELECTED_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) -print0)
 
-# main loop
-while true; do
-    change_wallpaper
-    sleep "$INTERVAL"
-done
+# check if any wallpapers were found
+if [ ${#WALLPAPERS[@]} -eq 0 ]; then
+    echo "No wallpapers found in the selected directory."
+    exit 1
+fi
+
+# randomly select a wallpaper
+random_wallpaper="${WALLPAPERS[RANDOM % ${#WALLPAPERS[@]}]}"
+kitty @ set-background-image "$random_wallpaper"
+
+# set the interval for changing wallpapers (in seconds)
+INTERVAL=30
+echo "Changing wallpaper every $INTERVAL seconds..."
+
+# Run the wallpaper change function in the background
+nohup bash -c "
+    WALLPAPERS=(${WALLPAPERS[@]})
+    change_wallpaper() {
+        local random_wallpaper=\"\${WALLPAPERS[RANDOM % \${#WALLPAPERS[@]}]}\"
+        kitty @ set-background-image \"\${random_wallpaper}\"
+    }
+    while true; do
+        change_wallpaper
+        sleep $INTERVAL
+    done
+" >/dev/null 2>&1 &

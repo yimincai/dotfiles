@@ -1,3 +1,6 @@
+export TERM="xterm-256color"
+export EDITOR="nvim"
+
 export ZPLUG_HOME=/opt/homebrew/opt/zplug
 # export ZPLUG_HOME=/usr/local/opt/zplug this is for intel mac
 source $ZPLUG_HOME/init.zsh
@@ -87,7 +90,7 @@ alias ok='~/.config/scripts/kitty_socket.sh'
 alias sbg='~/.config/scripts/kitty_set_bg.sh'
 alias gg='~/.config/scripts/kitty_remove_bg.sh'
 ## nsfw
-alias nbgr='nohup ~/.config/scripts/kitty_bg_rand.sh &'
+alias nbgr='~/.config/scripts/kitty_bg_rand.sh'
 alias nbg='~/.config/scripts/kitty_set_nsfw_bg.sh'
 
 # dotfiles
@@ -129,8 +132,10 @@ export MAVEN_HOME=$HOME/apache-maven-3.8.2
 export PATH=$PATH:$MAVEN_HOME/bin
 
 # Golang
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+# default is $HOME/go
+export GOPATH="$HOME/go"
+export GOBIN="$GOPATH/bin"
+export PATH="$PATH:$GOBIN"
 
 # Flutter
 export PATH="$PATH:$HOME/flutter/bin"

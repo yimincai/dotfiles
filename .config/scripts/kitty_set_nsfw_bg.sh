@@ -2,34 +2,49 @@
 
 find_dirs=(
     ~/Music/NSFW/wallpapers/h
+    ~/Music/NSFW/wallpapers/v
     ~/Music/NSFW/wallpapers/r-h
+    ~/Music/NSFW/wallpapers/r-v
 )
 
-if [[ $# -eq 1 ]]; then
-    selected=$1
-else
-    selected=$(
-        find "${find_dirs[@]}" -mindepth 1 -maxdepth 1 -type f \
-            \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) \
-            -not -name '.DS_Store' |
-            fzf
-    )
-fi
+selected_dir=$(
+    printf "%s\n" "${find_dirs[@]}" | fzf --prompt="Select wallpaper directory: "
+)
 
-if [[ -z $selected ]]; then
+if [[ -z $selected_dir ]]; then
+    echo "No directory selected"
     exit 0
 fi
 
-# set kitty background
-BACKGROUND_IMAGE="$selected"
-# BACKGROUND_IMAGE="/Users/neil/Desktop/example.jpg"
+if [ -n "$TMUX" ]; then
+    # 在 tmux 中使用 viu
+    preview_cmd='viu -w 80 {}'
+else
+    # 在非 tmux 中使用 kitty icat
+    preview_cmd='kitty +kitten icat --clear --transfer-mode=memory --place 80x40@140x5 --stdin < {} > /dev/tty'
 
-# check if file exists
-if [ -z "$BACKGROUND_IMAGE" ]; then
-    echo "please select a file"
+fi
+
+selected_image=$(
+    find "$selected_dir" -mindepth 1 -maxdepth 1 -type f \
+        \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) \
+        -not -name '.DS_Store' |
+        fzf --preview "$preview_cmd" \
+            --preview-window=right:40%:wrap \
+            --prompt="Select wallpaper image: "
+)
+
+if [[ -z $selected_image ]]; then
+    echo "No image selected"
+    exit 0
+fi
+
+BACKGROUND_IMAGE="$selected_image"
+
+if [ ! -f "$BACKGROUND_IMAGE" ]; then
+    echo "The selected file does not exist"
     exit 1
 fi
 
-# set background image
-echo "setting background image to $BACKGROUND_IMAGE"
-kitty @ set-background-image "$BACKGROUND_IMAGE"
+echo "Setting background image to $BACKGROUND_IMAGE"
+kitty @ set-background-image "$BACKGROUND_IMAGE" >/dev/null 2>&1 &

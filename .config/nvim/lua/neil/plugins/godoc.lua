@@ -1,13 +1,20 @@
 return {
 	{
-		"ray-x/go.nvim",
+		"fredrikaverpil/godoc.nvim",
+		version = "*",
 		dependencies = {
-			"ray-x/guihua.lua", -- recommended if need floating window support
-			"neovim/nvim-lspconfig",
-			"nvim-treesitter/nvim-treesitter",
+			-- { "folke/snacks.nvim" }, -- optional
+			{ "nvim-telescope/telescope.nvim" },
 		},
-		config = function()
-			require("go").setup()
-		end,
+		build = "go install github.com/lotusirous/gostdsym/stdsym@latest", -- optional
+		cmd = { "GoDoc" },
+		opts = {
+			picker = {
+				type = "telescope",
+			},
+			window = {
+				type = "vsplit", -- split | vsplit
+			},
+		},
 	},
 }
