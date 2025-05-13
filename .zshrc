@@ -79,19 +79,19 @@ alias yd="youtubedr"
 alias t="tmux"
 alias cd="z"
 # tmux
-alias ts='~/.config/scripts/tmux-sessionizer.sh'
-alias tc='~/.config/scripts/tmux-choose-session.sh'
+alias ts='~/scripts/tmux-sessionizer.sh'
+alias tc='~/scripts/tmux-choose-session.sh'
 # vpn
-alias vpn='~/.config/scripts/vpn.sh'
+alias vpn='~/scripts/vpn.sh'
 # file manager
 alias zz='yazi'
 # kitty
-alias ok='~/.config/scripts/kitty_socket.sh'
-alias sbg='~/.config/scripts/kitty_set_bg.sh'
-alias gg='~/.config/scripts/kitty_remove_bg.sh'
+alias ok='~/scripts/kitty_socket.sh'
+alias sbg='~/scripts/kitty_set_bg.sh'
+alias gg='~/scripts/kitty_remove_bg.sh'
 ## nsfw
-alias nbgr='~/.config/scripts/kitty_bg_rand.sh'
-alias nbg='~/.config/scripts/kitty_set_nsfw_bg.sh'
+alias nbgr='~/scripts/kitty_bg_rand.sh'
+alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
 
 # dotfiles
 # export DOTFILES=$HOME/.dotfiles
@@ -183,3 +183,8 @@ function yy() {
 
 # zoxide, a cd replacement tool
 eval "$(zoxide init zsh)"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/neil/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
