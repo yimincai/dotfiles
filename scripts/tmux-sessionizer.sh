@@ -4,8 +4,16 @@
 # alias tmux-sessionizer='~/scripts/tmux-sessionizer.sh'
 # bindkey -s '^f' 'tmux-sessionizer\n'  # 綁定 Ctrl+f 叫出 fzf
 
-LOG_FILE="$HOME/.tmux-sessionizer.log" # Log file location
-echo "$(date "+%Y-%m-%d %H:%M:%S") - Starting tmux-sessionizer script..." >>"$LOG_FILE"
+USE_LOG=false # Set to false to disable logging
+LOG_FILE="$HOME/.tmux-sessionizer.log"
+
+log() {
+    if $USE_LOG; then
+        echo "$(date "+%Y-%m-%d %H:%M:%S") - $1" >>"$LOG_FILE"
+    fi
+}
+
+log "Starting tmux-sessionizer script..."
 
 # Define directories to search for projects
 find_dirs=(
@@ -53,28 +61,28 @@ selected_name=$(basename "$selected" | tr ". -" "__")
 
 # Step 3: Check if session exists, create if it doesn't
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-    echo "$(date "+%Y-%m-%d %H:%M:%S") - Creating new tmux session for $selected_name..." >>"$LOG_FILE"
+    log "Creating new tmux session for $selected_name..."
     tmux new-session -ds "$selected_name" -c "$selected" \; send-keys 'clear' C-m
 else
-    echo "$(date "+%Y-%m-%d %H:%M:%S") - Session $selected_name already exists." >>"$LOG_FILE"
+    log "Session $selected_name already exists."
 fi
 
 # Step 4: Attach or switch depending on context
 if [[ -z "$TMUX" ]]; then
-    echo "$(date "+%Y-%m-%d %H:%M:%S") - Attaching to tmux session $selected_name..." >>"$LOG_FILE"
-    tmux attach-session -t "$selected_name" || echo "$(date "+%Y-%m-%d %H:%M:%S") - [warn] attach-session failed for $selected_name" >>"$LOG_FILE"
+    log "Attaching to tmux session $selected_name..."
+    tmux attach-session -t "$selected_name" || log "[warn] attach-session failed for $selected_name"
 else
     if tmux switch-client -t "$selected_name" 2>/dev/null; then
-        echo "$(date "+%Y-%m-%d %H:%M:%S") - Successfully switched to tmux session $selected_name" >>"$LOG_FILE"
+        log "Successfully switched to tmux session $selected_name"
     else
-        echo "$(date "+%Y-%m-%d %H:%M:%S") - [warn] switch-client failed, checking session existence..." >>"$LOG_FILE"
+        log "[warn] switch-client failed, checking session existence..."
 
         if tmux has-session -t "$selected_name" 2>/dev/null; then
-            echo "$(date "+%Y-%m-%d %H:%M:%S") - Opening new window in existing session $selected_name..." >>"$LOG_FILE"
+            log "Opening new window in existing session $selected_name..."
             tmux new-window -t "$selected_name:" -c "$selected"
             tmux select-window -t "$selected_name:"
         else
-            echo "$(date "+%Y-%m-%d %H:%M:%S") - [warn] session $selected_name no longer exists, creating again..." >>"$LOG_FILE"
+            log "[warn] session $selected_name no longer exists, creating again..."
             tmux new-session -ds "$selected_name" -c "$selected" \; send-keys 'clear' C-m
             tmux switch-client -t "$selected_name"
         fi
@@ -82,7 +90,7 @@ else
 fi
 
 # Debug info
-echo "[info] selected: $selected"
-echo "[info] session name: $selected_name"
-echo "[info] tmux session list:" >>"$LOG_FILE"
-tmux list-sessions >>"$LOG_FILE"
+# echo "[info] selected: $selected"
+# echo "[info] session name: $selected_name"
+# log "tmux session list:"
+# tmux list-sessions >>"$LOG_FILE"
