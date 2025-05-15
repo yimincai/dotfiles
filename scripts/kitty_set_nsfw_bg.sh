@@ -30,7 +30,7 @@ selected_image=$(
         \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) \
         -not -name '.DS_Store' |
         fzf --preview "$preview_cmd" \
-            --preview-window=right:40%:wrap \
+            --preview-window=right:50%:wrap \
             --prompt="Select wallpaper image: "
 )
 

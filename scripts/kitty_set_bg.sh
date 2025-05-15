@@ -18,7 +18,7 @@ selected_image=$(
         \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \) \
         -not -name '.DS_Store' |
         fzf --preview "kitty +kitten icat --stdin=detect --clear --place=80x24@140x5 --transfer-mode=memory --stdin < {} > /dev/tty" \
-            --preview-window=right:40%:wrap \
+            --preview-window=right:50%:wrap \
             --prompt="Select wallpaper image: "
 )
 

@@ -1,96 +1,104 @@
 #!/usr/bin/env bash
 
-# set it to ~/.zshrc or ~/.bashrc
-# alias tmux-sessionizer='~/scripts/tmux-sessionizer.sh'
-# bindkey -s '^f' 'tmux-sessionizer\n'  # 綁定 Ctrl+f 叫出 fzf
-
-USE_LOG=false # Set to false to disable logging
-LOG_FILE="$HOME/.tmux-sessionizer.log"
-
-log() {
-    if $USE_LOG; then
-        echo "$(date "+%Y-%m-%d %H:%M:%S") - $1" >>"$LOG_FILE"
-    fi
-}
-
-log "Starting tmux-sessionizer script..."
-
-# Define directories to search for projects
-find_dirs=(
-    ~/Development
-    ~/Development/GH
-    ~/Development/Working/backend
-    ~/Development/Working/app
-    ~/Development/Working/cli
-    ~/Development/Working/web
-    ~/Development/Working/others
-    ~/Development/DevOps/itracxing
-    ~/Development/DevOps/tools
-    ~/Development/SideProjects
-    ~/Development/Testing
-    ~/Development/Clones
-    ~/Development/Personal
-    ~/Development/Learning/c
-    ~/Development/Learning/cpp
-    ~/Development/Learning/cpplayground
-    ~/Development/Learning/python
-    ~/Development/Learning/js
-    ~/Development/Learning/java
-    ~/Development/Learning/rust
-    ~/Development/Learning/golang
-    ~/Development/Learning/css
-    ~/Development/Learning/vue
-    ~/Development/Learning/react
-    ~/Development/Learning/flutter
-    ~/Development/Learning/video
+# === Config ===
+SEARCH_DIRS=(
+    "${HOME}/Development"
+    "${HOME}/Development/GH"
+    "${HOME}/Development/Working/backend"
+    "${HOME}/Development/Working/app"
+    "${HOME}/Development/Working/cli"
+    "${HOME}/Development/Working/web"
+    "${HOME}/Development/Working/others"
+    "${HOME}/Development/DevOps/itracxing"
+    "${HOME}/Development/DevOps/tools"
+    "${HOME}/Development/SideProjects"
+    "${HOME}/Development/Testing"
+    "${HOME}/Development/Clones"
+    "${HOME}/Development/Personal"
+    "${HOME}/Development/Learning/c"
+    "${HOME}/Development/Learning/cpp"
+    "${HOME}/Development/Learning/cpplayground"
+    "${HOME}/Development/Learning/python"
+    "${HOME}/Development/Learning/js"
+    "${HOME}/Development/Learning/java"
+    "${HOME}/Development/Learning/rust"
+    "${HOME}/Development/Learning/golang"
+    "${HOME}/Development/Learning/css"
+    "${HOME}/Development/Learning/vue"
+    "${HOME}/Development/Learning/react"
+    "${HOME}/Development/Learning/flutter"
+    "${HOME}/Development/Learning/video"
 )
 
-# Step 1: Select directory
-if [[ $# -eq 1 ]]; then
-    selected=$1
-else
+SESSIONIZER_LOG="${HOME}/scripts/tmux-sessionizer.log"
+
+# remove old log file
+if [[ -f "$SESSIONIZER_LOG" ]]; then
+    rm -f "$SESSIONIZER_LOG"
+fi
+
+log() {
+    echo "$(date +'%F %T') - $*" | tee -a "$SESSIONIZER_LOG"
+}
+
+# === FZF-based project picker ===
+pick_project() {
+    local selected
     selected=$(
-        find "${find_dirs[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf
+        find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null |
+            sort |
+            fzf --height=40% --reverse --prompt="📁 Pick a project > " \
+                --preview 'tree -L 1 {} | head -100' \
+                --preview-window=right:50%
     )
+
+    [[ -z "$selected" ]] && exit 1
+    echo "$selected"
+}
+
+# === Main logic ===
+PROJECT_DIR="$1"
+if [[ -z "$PROJECT_DIR" ]]; then
+    # log "Launching fzf to pick a project..."
+    PROJECT_DIR=$(pick_project)
 fi
 
-[[ -z "$selected" ]] && exit 0
+PROJECT_NAME="$(basename "$PROJECT_DIR")"
+# log "Selected project: $PROJECT_NAME at $PROJECT_DIR"
 
-# Step 2: Secure session name conversion (avoid . or spaces)
-selected_name=$(basename "$selected" | tr ". -" "__")
-
-# Step 3: Check if session exists, create if it doesn't
-if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-    log "Creating new tmux session for $selected_name..."
-    tmux new-session -ds "$selected_name" -c "$selected" \; send-keys 'clear' C-m
-else
-    log "Session $selected_name already exists."
-fi
-
-# Step 4: Attach or switch depending on context
-if [[ -z "$TMUX" ]]; then
-    log "Attaching to tmux session $selected_name..."
-    tmux attach-session -t "$selected_name" || log "[warn] attach-session failed for $selected_name"
-else
-    if tmux switch-client -t "$selected_name" 2>/dev/null; then
-        log "Successfully switched to tmux session $selected_name"
+# Check if session exists
+if tmux has-session -t="$PROJECT_NAME" 2>/dev/null; then
+    # log "Session $PROJECT_NAME already exists."
+    if [[ -n "$TMUX" ]]; then
+        # log "Inside tmux, switching client..."
+        tmux switch-client -t "$PROJECT_NAME" || {
+            # log "[warn] switch-client failed, creating new window..."
+            tmux new-window -t "$PROJECT_NAME" -c "$PROJECT_DIR"
+        }
     else
-        log "[warn] switch-client failed, checking session existence..."
-
-        if tmux has-session -t "$selected_name" 2>/dev/null; then
-            log "Opening new window in existing session $selected_name..."
-            tmux new-window -t "$selected_name:" -c "$selected"
-            tmux select-window -t "$selected_name:"
-        else
-            log "[warn] session $selected_name no longer exists, creating again..."
-            tmux new-session -ds "$selected_name" -c "$selected" \; send-keys 'clear' C-m
-            tmux switch-client -t "$selected_name"
-        fi
+        # log "Outside tmux, attaching..."
+        tmux attach-session -t "$PROJECT_NAME"
     fi
+    exit 0
 fi
 
-# Debug info
-# echo "[info] selected: $selected"
-# echo "[info] session name: $selected_name"
-# log "tmux session list:"
-# tmux list-sessions >>"$LOG_FILE"
+# Create session
+# log "Creating session $PROJECT_NAME..."
+tmux new-session -d -s "$PROJECT_NAME" -c "$PROJECT_DIR"
+
+# Wait a bit to catch any immediate exit
+sleep 0.2
+if ! tmux has-session -t="$PROJECT_NAME" 2>/dev/null; then
+    # log "[fatal] Session vanished. Shell likely exited immediately."
+    # log "[hint] Check shell rc files (.zshrc/.bashrc) for early exits."
+    exit 1
+fi
+
+# Switch or attach
+if [[ -n "$TMUX" ]]; then
+    # log "Inside tmux, switching..."
+    tmux switch-client -t "$PROJECT_NAME"
+else
+    # log "Outside tmux, attaching..."
+    tmux attach-session -t "$PROJECT_NAME"
+fi

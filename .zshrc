@@ -1,24 +1,32 @@
+# 基本環境變數
 export TERM="xterm-256color"
 export EDITOR="nvim"
-
-export ZPLUG_HOME=/opt/homebrew/opt/zplug
-# export ZPLUG_HOME=/usr/local/opt/zplug this is for intel mac
-source $ZPLUG_HOME/init.zsh
-
 export KITTY_SOCK_DIR=/tmp/kitty
 
+# zplug 安裝位置
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+# 主題 (powerlevel10k)
 zplug romkatv/powerlevel10k, as:theme
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# zplug 自我管理
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+# 統一用 zplug 管理插件
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search", defer:2
-zplug "plugins/git",   from:oh-my-zsh, defer:3
+zplug "plugins/git", from:oh-my-zsh, defer:3
 zplug "modules/prompt", from:prezto, defer:3
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# Load if "if" tag returns true
+
+# macOS 特有插件，剪貼簿支援
 zplug "lib/clipboard", from:oh-my-zsh, defer:2, if:"[[ $OSTYPE == *darwin* ]]"
 
-# Install plugins if there are plugins that have not been installed
+# 檢查並提示安裝缺少插件
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
     if read -q; then
@@ -26,89 +34,65 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# Then, source plugins and add commands to $PATH
+# 載入所有插件與主題
 zplug load
 
-HISTFILE=~/.zsh_history
-HISTSIZE=999999999
-SAVEHIST=$HISTSIZE
+# oh-my-zsh 主目錄（部分插件可能需要）
+export ZSH="/Users/neil/.oh-my-zsh"
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# 主題設定 (影響 oh-my-zsh 核心組件)
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Powerlevel10k 即時提示
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
+# PATH 基本設定
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="/Users/neil/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
+# 自訂函數
 gacp() {
     git add -A &&
     git commit -m "${1?'Missing commit message'}" &&
     git push
 }
 
-plugins=(
-git
-autojump
-zsh-completions
-zsh-autosuggestions
-zsh-syntax-highlighting
-)
-
-
-# aliases
-alias c="clear"
-alias ll="ls -lA"
-alias la="ls -a"
-alias k="kubectl"
-alias vim="nvim"
-# find port pid, usage: fp tcp:3000
-alias fp="lsof -i"
-alias yd="youtubedr"
-alias t="tmux"
-alias cd="z"
-# tmux
-alias ts='~/scripts/tmux-sessionizer.sh'
-alias tc='~/scripts/tmux-choose-session.sh'
-# vpn
-alias vpn='~/scripts/vpn.sh'
-# file manager
-alias zz='yazi'
-# kitty
-alias ok='~/scripts/kitty_socket.sh'
-alias sbg='~/scripts/kitty_set_bg.sh'
-alias gg='~/scripts/kitty_remove_bg.sh'
-## nsfw
-alias nbgr='~/scripts/kitty_bg_rand.sh'
-alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
-
-# dotfiles
-# export DOTFILES=$HOME/.dotfiles
-# this is for linux
-# alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-# this is for mac
-# alias dotfiles='/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
-# go cover
-# usage: go-cover ./... <- this can replace to any path or relative path
 cover () {
     t="/tmp/go-cover.$$.tmp"
     go test -coverprofile=$t $@ && go tool cover -html=$t && unlink $t
 }
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
+yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
+
+# alias 總整理
+alias c="clear"
+alias ll="ls -lA"
+alias la="ls -a"
+alias k="kubectl"
+alias vim="nvim"
+alias fp="lsof -i"
+alias yd="youtubedr"
+alias t="tmux"
+alias cd="z"
+alias ts='~/scripts/tmux-sessionizer.sh'
+alias tc='~/scripts/tmux-choose-session.sh'
+alias vpn='~/scripts/vpn.sh'
+alias zz='yazi'
+alias ok='~/scripts/kitty_socket.sh'
+alias sbg='~/scripts/kitty_set_bg.sh'
+alias gg='~/scripts/kitty_remove_bg.sh'
+alias nbgr='~/scripts/kitty_bg_rand.sh'
+alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
+
+# conda 初始化 (miniforge)
 __conda_setup="$('/Users/neil/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -120,71 +104,57 @@ else
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# mvn
+# Maven
 export MAVEN_HOME=$HOME/apache-maven-3.8.2
 export PATH=$PATH:$MAVEN_HOME/bin
 
 # Golang
-# default is $HOME/go
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
 
-# Flutter
+# Flutter & Flutterfire CLI
 export PATH="$PATH:$HOME/flutter/bin"
-# Flutterfire (CLI)
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH:$HOME/.pub-cache/bin"
 
-# Java
-# show all versions /usr/libexec/java_home -V
+# Java (Azul JDK 19)
 export JAVA_HOME=/Users/neil/Library/Java/JavaVirtualMachines/azul-19/Contents/Home
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Bun completions
-[ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
-
 # Bun
+[ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Rust
 . "$HOME/.cargo/env"
+
+# PostgreSQL libpq
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
-# Fixed the npm canvas install issue
+# Fix npm canvas install
 export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/path.zsh.inc'; fi
+# Google Cloud SDK PATH & Completion
+if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then
+    . '/Users/neil/google-cloud-sdk/path.zsh.inc'
+fi
+if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then
+    . '/Users/neil/google-cloud-sdk/completion.zsh.inc'
+fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi
-
-# yazi, a terminal based file manager
-function yy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-# zoxide, a cd replacement tool
+# zoxide (cd 替代工具)
 eval "$(zoxide init zsh)"
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+
+# Docker CLI 補全
 fpath=(/Users/neil/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
-# End of Docker CLI completions
+
