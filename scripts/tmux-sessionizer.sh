@@ -9,6 +9,7 @@ echo "$(date "+%Y-%m-%d %H:%M:%S") - Starting tmux-sessionizer script..." >>"$LO
 
 # Define directories to search for projects
 find_dirs=(
+    ~/Development
     ~/Development/GH
     ~/Development/Working/backend
     ~/Development/Working/app

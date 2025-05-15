@@ -185,7 +185,7 @@ macOS_installation() {
         "go" "unzip" "ffmpeg" "zplug"
     )
     brew_cask_packages=(
-        "google-chrome" "visual-studio-code" "slack" "discord" "spotify"
+        # "google-chrome" "visual-studio-code" "slack" "discord" "spotify"
         "obsidian" "alacritty" "kitty" "ghostty"
     )
 
