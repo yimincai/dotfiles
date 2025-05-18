@@ -238,11 +238,11 @@ macOS_installation() {
     )
     brew_cask_packages=(
         # "google-chrome" "visual-studio-code" "slack" "discord" "spotify"
-        "obsidian" "alacritty" "kitty" "ghostty", "font-meslo-lg-nerd-font"
+        "obsidian" "alacritty" "kitty" "ghostty" "font-meslo-lg-nerd-font"
         "font-hack-nerd-font"
     )
 
-    echo -e "${Blue}{DRY_RUN_PREFIX}Installing CLI packages（brew install）${Reset}"
+    echo -e "${Blue}{$DRY_RUN_PREFIX}Installing CLI packages（brew install）${Reset}"
     for package in "${brew_packages[@]}"; do
         if ! brew list "$package" &>/dev/null; then
             echo -e "${Green}${DRY_RUN_PREFIX}Installing $package...${Reset}"
@@ -307,9 +307,10 @@ arch_installation() {
     pacman_packages=(
         "wget" "zsh" "tmux" "neovim" "git" "fastfetch" "bat" "ripgrep" "fd"
         "fzf" "jq" "htop" "btop" "tree" "nmap" "go" "unzip" "ffmpeg"
+        "bluez" "bluez-utils" "wl-cilpboard"
     )
     aur_packages=(
-        "kitty" "ghostty" "zplug-git" "nerd-fonts-hack"
+        "kitty" "ghostty" "nerd-fonts-hack"
     )
 
     echo -e "${Blue}${DRY_RUN_PREFIX}Installing pacman packages（pacman -S）${Reset}"
