@@ -83,7 +83,7 @@ detect_os() {
                 exit 1
             fi
         else
-            eche -e "${Red}❌ Cannot determine Linux distro: /etc/os-release missing${Reset}"
+            echo -e "${Red}❌ Cannot determine Linux distro: /etc/os-release missing${Reset}"
             exit 1
         fi
         ;;
@@ -242,7 +242,7 @@ macOS_installation() {
         "font-hack-nerd-font"
     )
 
-    echo -e "${Blue}{$DRY_RUN_PREFIX}Installing CLI packages（brew install）${Reset}"
+    echo -e "${Blue}${DRY_RUN_PREFIX}Installing CLI packages（brew install）${Reset}"
     for package in "${brew_packages[@]}"; do
         if ! brew list "$package" &>/dev/null; then
             echo -e "${Green}${DRY_RUN_PREFIX}Installing $package...${Reset}"
@@ -307,7 +307,7 @@ arch_installation() {
     pacman_packages=(
         "wget" "zsh" "tmux" "neovim" "git" "fastfetch" "bat" "ripgrep" "fd"
         "fzf" "jq" "htop" "btop" "tree" "nmap" "go" "unzip" "ffmpeg"
-        "bluez" "bluez-utils" "wl-cilpboard"
+        "bluez" "bluez-utils" "wl-clipboard"
     )
     aur_packages=(
         "kitty" "ghostty" "nerd-fonts-hack"
