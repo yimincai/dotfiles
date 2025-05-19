@@ -43,29 +43,29 @@ local is_mac = vim.fn.has("macunix") == 1
 local is_linux = vim.fn.has("unix") == 1 and not is_mac
 
 if is_mac then
-	vim.g.clipboard = {
-		name = "myClipboard",
-		copy = {
-			["+"] = "pbcopy",
-			["*"] = "pbcopy",
-		},
-		paste = {
-			["+"] = "pbpaste",
-			["*"] = "pbpaste",
-		},
-		cache_enabled = 0,
-	}
+    vim.g.clipboard = {
+        name = "myClipboard",
+        copy = {
+            ["+"] = "pbcopy",
+            ["*"] = "pbcopy",
+        },
+        paste = {
+            ["+"] = "pbpaste",
+            ["*"] = "pbpaste",
+        },
+        cache_enabled = 0,
+    }
 elseif is_linux then
-	vim.g.clipboard = {
-		name = "myClipboard",
-		copy = {
-			["+"] = "xclip -selection clipboard",
-			["*"] = "xclip -selection clipboard",
-		},
-		paste = {
-			["+"] = "xclip -selection clipboard -o",
-			["*"] = "xclip -selection clipboard -o",
-		},
-		cache_enabled = 0,
-	}
+    vim.g.clipboard = {
+        name = "myClipboard",
+        copy = {
+            ["+"] = "wl-copy",
+            ["*"] = "wl-copy",
+        },
+        paste = {
+            ["+"] = "wl-paste",
+            ["*"] = "wl-paste",
+        },
+        cache_enabled = 0,
+    }
 end

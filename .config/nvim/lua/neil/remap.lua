@@ -35,18 +35,14 @@ vim.api.nvim_set_keymap("n", "<leader>s", ":split<CR>", default_silent_opts)
 
 -- lsp restart
 vim.keymap.set("n", "<leader>R", function()
-	vim.cmd("LspRestart")
-	notify("Language server restarted", "info", {
-		title = "LSP",
-	})
+    vim.cmd("LspRestart")
+    notify("Language server restarted", "info", {
+        title = "LSP",
+    })
 end)
 
 -- Copilot
 vim.g.copilot_assume_mapped = true
-
--- Clipboard
-vim.api.nvim_set_keymap("n", "<leader>y", '"+y<CR>', { noremap = true })
-vim.api.nvim_set_keymap("x", "<leader>y", '"+y<CR>', { noremap = true })
 
 -- Celluar Automaton
 vim.keymap.set("n", "<leader>wtf", ":CellularAutomaton make_it_rain<CR>")
@@ -60,32 +56,32 @@ vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = tru
 
 -- Fold
 -- Key mappings for folding and unfolding
-vim.api.nvim_set_keymap("n", "zj", ":foldopen!<CR>", default_silent_opts) -- fold open cursor
+vim.api.nvim_set_keymap("n", "zj", ":foldopen!<CR>", default_silent_opts)  -- fold open cursor
 vim.api.nvim_set_keymap("n", "zk", ":foldclose!<CR>", default_silent_opts) -- fold close cursor
 -- enable or disable fold
 vim.keymap.set("n", "<leader>zm", function()
-	if vim.wo.foldenable then
-		vim.opt.foldenable = false
-		vim.opt.foldlevel = 99
-		notify("Fold disable", "info", {
-			title = "Editor",
-		})
-	else
-		vim.opt.foldenable = true
-		vim.opt.foldlevel = 0
-		notify("Fold enable", "info", {
-			title = "Editor",
-		})
-	end
+    if vim.wo.foldenable then
+        vim.opt.foldenable = false
+        vim.opt.foldlevel = 99
+        notify("Fold disable", "info", {
+            title = "Editor",
+        })
+    else
+        vim.opt.foldenable = true
+        vim.opt.foldlevel = 0
+        notify("Fold enable", "info", {
+            title = "Editor",
+        })
+    end
 end)
 
 -- Telescoperema
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_opts)
 vim.api.nvim_set_keymap(
-	"n",
-	"<leader>as",
-	"<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>",
-	default_opts
+    "n",
+    "<leader>as",
+    "<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>",
+    default_opts
 )
 vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
 vim.api.nvim_set_keymap("n", "<leader>td", ":TodoTelescope<cr>", default_opts)
@@ -112,53 +108,53 @@ vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", default_silent_opts)
 
 -- testing
 vim.keymap.set("n", "<leader>tt", function()
-	if vim.bo.filetype == "go" then
-		vim.cmd("GoTestFile")
-		notify("Running GoTestFile", "info", {
-			title = "Golang",
-		})
-	else
-		notify("This filetype not supported for test file", "error", {
-			title = "Golang",
-		})
-	end
+    if vim.bo.filetype == "go" then
+        vim.cmd("GoTestFile")
+        notify("Running GoTestFile", "info", {
+            title = "Golang",
+        })
+    else
+        notify("This filetype not supported for test file", "error", {
+            title = "Golang",
+        })
+    end
 end)
 
 vim.keymap.set("n", "<leader>tc", function()
-	if vim.bo.filetype == "go" then
-		vim.cmd("GoTestFunc")
-		notify("Running GoTestFunc", "info", {
-			title = "Golang",
-		})
-	else
-		notify("This filetype not supported for test function", "error", {
-			title = "Golang",
-		})
-	end
+    if vim.bo.filetype == "go" then
+        vim.cmd("GoTestFunc")
+        notify("Running GoTestFunc", "info", {
+            title = "Golang",
+        })
+    else
+        notify("This filetype not supported for test function", "error", {
+            title = "Golang",
+        })
+    end
 end)
 
 vim.keymap.set("n", "<leader>tp", function()
-	if vim.bo.filetype == "go" then
-		vim.cmd("GoTestPkg")
-		notify("Running GoTestPkg", "info", {
-			title = "Golang",
-		})
-	else
-		notify("This filetype not supported for test pkg", "error", {
-			title = "Golang",
-		})
-	end
+    if vim.bo.filetype == "go" then
+        vim.cmd("GoTestPkg")
+        notify("Running GoTestPkg", "info", {
+            title = "Golang",
+        })
+    else
+        notify("This filetype not supported for test pkg", "error", {
+            title = "Golang",
+        })
+    end
 end)
 
 vim.keymap.set("n", "<leader>ta", function()
-	if vim.bo.filetype == "go" then
-		vim.cmd("GoTestSum")
-		notify("Running GoTestSum", "info", {
-			title = "Golang",
-		})
-	else
-		notify("This filetype not supported for test sum", "error", {
-			title = "Golang",
-		})
-	end
+    if vim.bo.filetype == "go" then
+        vim.cmd("GoTestSum")
+        notify("Running GoTestSum", "info", {
+            title = "Golang",
+        })
+    else
+        notify("This filetype not supported for test sum", "error", {
+            title = "Golang",
+        })
+    end
 end)

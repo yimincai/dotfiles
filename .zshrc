@@ -4,7 +4,7 @@ export EDITOR="nvim"
 export KITTY_SOCK_DIR=/tmp/kitty
 
 # zplug 安裝位置
-export ZPLUG_HOME=/opt/homebrew/opt/zplug
+export ZPLUG_HOME="$HOME/.zplug/"
 source $ZPLUG_HOME/init.zsh
 
 # 主題 (powerlevel10k)
@@ -23,9 +23,6 @@ zplug "plugins/git", from:oh-my-zsh, defer:3
 zplug "modules/prompt", from:prezto, defer:3
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# macOS 特有插件，剪貼簿支援
-zplug "lib/clipboard", from:oh-my-zsh, defer:2, if:"[[ $OSTYPE == *darwin* ]]"
-
 # 檢查並提示安裝缺少插件
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -38,7 +35,7 @@ fi
 zplug load
 
 # oh-my-zsh 主目錄（部分插件可能需要）
-export ZSH="/Users/neil/.oh-my-zsh"
+# export ZSH="/Users/neil/.oh-my-zsh"
 
 # 主題設定 (影響 oh-my-zsh 核心組件)
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -81,7 +78,7 @@ alias vim="nvim"
 alias fp="lsof -i"
 alias yd="youtubedr"
 alias t="tmux"
-alias cd="z"
+# alias cd="z"
 alias ts='~/scripts/tmux-sessionizer.sh'
 alias tc='~/scripts/tmux-choose-session.sh'
 alias vpn='~/scripts/vpn.sh'
@@ -93,26 +90,26 @@ alias nbgr='~/scripts/kitty_bg_rand.sh'
 alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
 
 # conda 初始化 (miniforge)
-__conda_setup="$('/Users/neil/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/neil/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/Users/neil/miniforge3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/neil/miniforge3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/Users/neil/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/neil/miniforge3/etc/profile.d/conda.sh" ]; then
+#         . "/Users/neil/miniforge3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/neil/miniforge3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 
 # nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # Maven
-export MAVEN_HOME=$HOME/apache-maven-3.8.2
-export PATH=$PATH:$MAVEN_HOME/bin
+# export MAVEN_HOME=$HOME/apache-maven-3.8.2
+# export PATH=$PATH:$MAVEN_HOME/bin
 
 # Golang
 export GOPATH="$HOME/go"
@@ -120,41 +117,41 @@ export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
 
 # Flutter & Flutterfire CLI
-export PATH="$PATH:$HOME/flutter/bin"
-export PATH="$PATH:$HOME/.pub-cache/bin"
+# export PATH="$PATH:$HOME/flutter/bin"
+# export PATH="$PATH:$HOME/.pub-cache/bin"
 
 # Java (Azul JDK 19)
-export JAVA_HOME=/Users/neil/Library/Java/JavaVirtualMachines/azul-19/Contents/Home
+# export JAVA_HOME=/Users/neil/Library/Java/JavaVirtualMachines/azul-19/Contents/Home
 
 # Bun
-[ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# [ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Rust
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 # PostgreSQL libpq
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+# export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # Fix npm canvas install
-export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
+# export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
+# export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 
 # Google Cloud SDK PATH & Completion
-if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then
-    . '/Users/neil/google-cloud-sdk/path.zsh.inc'
-fi
-if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then
-    . '/Users/neil/google-cloud-sdk/completion.zsh.inc'
-fi
+# if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then
+#     . '/Users/neil/google-cloud-sdk/path.zsh.inc'
+# fi
+# if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then
+#     . '/Users/neil/google-cloud-sdk/completion.zsh.inc'
+# fi
 
 # zoxide (cd 替代工具)
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
 
 # Docker CLI 補全
-fpath=(/Users/neil/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+# fpath=(/Users/neil/.docker/completions $fpath)
+# autoload -Uz compinit
+# compinit
 
