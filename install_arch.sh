@@ -49,6 +49,9 @@ pacman_packages=(
     "task"
     "docker"
     "docker-compose"
+    "vlc"
+    "lazygit"
+    "dunst" # notify
     # Chinese input
     "fcitx5-im" # main framework, qt, gtk UI support
     "fcitx5-chewing"
@@ -71,6 +74,7 @@ aur_packages=(
     "hyprshot"
     "vesktop-bin"
     "fcitx5-mcbopomofo-git" # 小麥輸入法
+    "live-media" # vlc watch stream tool (rtsp)
 )
 
 # --- Files and Directories to Symlink ---

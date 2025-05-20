@@ -124,8 +124,6 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# other plugins or settings from internet
-.tmux/plugins/
-kitty/kitty-themes/
+# other plugins or settings
 scripts/vpn.sh
-
+scripts/kid-stream.sh
