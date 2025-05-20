@@ -38,16 +38,39 @@ pacman_packages=(
     "go"
     "unzip"
     "ffmpeg"
-    "wl-clipboard"
-    "bluez"
-    "bluez-utils"
-    "blueman"
-    "zoxide"
+    "wl-clipboard" # wayland clipboard
+    "bluez" # bluetooth
+    "bluez-utils" # bluetoothctl
+    "blueman" # gui bluetooth manager, blueman-manager
+    "zoxide" # the cd cmd changer
+    "pavucontrol" # volume controller
+    "wofi" # app luncher
+    "waybar"
+    "task"
+    "docker"
+    "docker-compose"
+    # Chinese input
+    "fcitx5-im" # main framework, qt, gtk UI support
+    "fcitx5-chewing"
+    "fcitx5-configtool"
+    # fonts
+    "ttf-roboto-mono"
+    "ttf-dejavu"
+    "ttf-nerd-fonts-symbols"
+    "otf-font-awesome"
+    "noto-fonts"
+    "noto-fonts-cjk"
+    "noto-fonts-emoji"
+    "noto-fonts-extra"
 )
 
 aur_packages=(
     "kitty"
     "ghostty"
+    "spotify"
+    "hyprshot"
+    "vesktop-bin"
+    "fcitx5-mcbopomofo-git" # 小麥輸入法
 )
 
 # --- Files and Directories to Symlink ---
@@ -57,7 +80,6 @@ files=(
     ".gitconfig"
     ".gitignore"
     ".tmux.conf"
-    ".tmux"     # This is a directory
     "scripts" # This is a directory
 )
 
@@ -67,6 +89,8 @@ files_in_config_folder=(
     ".config/nvim"
     ".config/ghostty"
     ".config/hypr"
+    ".config/wofi"
+    ".config/waybar"
 )
 
 # --- Functions ---
@@ -201,6 +225,16 @@ arch_installation() {
             echo -e "${Yellow}$package is already installed, skipping.${Reset}"
         fi
     done
+    # hyprshot
+    mkdir -p "$HOME/Screenshots"
+    # docker
+    sudo systemctl enable --now docker.service
+    sudo systemctl start --now docker.service
+    sudo usermod -aG docker $USER
+
+    # 小麥輸入法,沒跑這行在 fcitx5-configtool 中會看不到輸入法中, 跑完重啟 fcitx5
+    sudo gtk-update-icon-cache /usr/share/icons/hicolor
+
     echo -e "${Blue}DONE with Arch Linux installation steps!${Reset}"
 }
 

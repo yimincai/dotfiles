@@ -75,7 +75,7 @@ vim.keymap.set("n", "<leader>zm", function()
     end
 end)
 
--- Telescoperema
+-- Telescope
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_opts)
 vim.api.nvim_set_keymap(
     "n",
@@ -85,7 +85,6 @@ vim.api.nvim_set_keymap(
 )
 vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
 vim.api.nvim_set_keymap("n", "<leader>td", ":TodoTelescope<cr>", default_opts)
--- vim.api.nvim_set_keymap('n', '<leader>/', ":silent grep ", default_opts)
 vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
 
 -- Lazygit

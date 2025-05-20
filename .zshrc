@@ -89,69 +89,13 @@ alias gg='~/scripts/kitty_remove_bg.sh'
 alias nbgr='~/scripts/kitty_bg_rand.sh'
 alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
 
-# conda 初始化 (miniforge)
-# __conda_setup="$('/Users/neil/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/Users/neil/miniforge3/etc/profile.d/conda.sh" ]; then
-#         . "/Users/neil/miniforge3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/Users/neil/miniforge3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-
-# nvm
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# Maven
-# export MAVEN_HOME=$HOME/apache-maven-3.8.2
-# export PATH=$PATH:$MAVEN_HOME/bin
-
 # Golang
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
 
-# Flutter & Flutterfire CLI
-# export PATH="$PATH:$HOME/flutter/bin"
-# export PATH="$PATH:$HOME/.pub-cache/bin"
-
-# Java (Azul JDK 19)
-# export JAVA_HOME=/Users/neil/Library/Java/JavaVirtualMachines/azul-19/Contents/Home
-
-# Bun
-# [ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
-# export BUN_INSTALL="$HOME/.bun"
-# export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Rust
-# . "$HOME/.cargo/env"
-
-# PostgreSQL libpq
-# export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-
-# Fix npm canvas install
-# export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
-# export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
-
-# Google Cloud SDK PATH & Completion
-# if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then
-#     . '/Users/neil/google-cloud-sdk/path.zsh.inc'
-# fi
-# if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then
-#     . '/Users/neil/google-cloud-sdk/completion.zsh.inc'
-# fi
-
-# zoxide (cd 替代工具)
-# eval "$(zoxide init zsh)"
-
-# Docker CLI 補全
-# fpath=(/Users/neil/.docker/completions $fpath)
-# autoload -Uz compinit
-# compinit
+# Nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
