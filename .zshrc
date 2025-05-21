@@ -69,6 +69,13 @@ yy() {
     rm -f -- "$tmp"
 }
 
+dev-install() {
+  local prev_dir="$PWD"
+  cd ~/Development/personal/dotfiles || return
+  ./install_arch.sh
+  cd "$prev_dir" || return
+}
+
 # alias 總整理
 alias c="clear"
 alias ll="ls -lA"
@@ -80,7 +87,6 @@ alias yd="youtubedr"
 alias t="tmux"
 # alias cd="z"
 alias sink='~/scripts/toggle-audio-output.sh'
-alias env-install='~/Development/personal/dotfiles/install_arch.sh'
 alias ts='~/scripts/tmux-sessionizer.sh'
 alias tc='~/scripts/tmux-choose-session.sh'
 alias vpn='~/scripts/vpn.sh'

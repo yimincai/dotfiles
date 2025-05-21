@@ -39,12 +39,12 @@ pacman_packages=(
     "unzip"
     "ffmpeg"
     "wl-clipboard" # wayland clipboard
-    "bluez" # bluetooth
-    "bluez-utils" # bluetoothctl
-    "blueman" # gui bluetooth manager, blueman-manager
-    "zoxide" # the cd cmd changer
-    "pavucontrol" # volume controller
-    "wofi" # app luncher
+    "bluez"        # bluetooth
+    "bluez-utils"  # bluetoothctl
+    "blueman"      # gui bluetooth manager, blueman-manager
+    "zoxide"       # the cd cmd changer
+    "pavucontrol"  # volume controller
+    "wofi"         # app luncher
     "waybar"
     "task"
     "docker"
@@ -52,6 +52,8 @@ pacman_packages=(
     "vlc"
     "lazygit"
     "dunst" # notify
+    "protobuf"
+    "libsecret"
     # Chinese input
     "fcitx5-im" # main framework, qt, gtk UI support
     "fcitx5-chewing"
@@ -74,7 +76,11 @@ aur_packages=(
     "hyprshot"
     "vesktop-bin"
     "fcitx5-mcbopomofo-git" # 小麥輸入法
-    "live-media" # vlc watch stream tool (rtsp)
+    "live-media"            # vlc watch stream tool (rtsp)
+    "wombat"                # cross platform gRPC client
+    "postman"
+    "brave-bin"
+    "dbeaver"
 )
 
 # --- Files and Directories to Symlink ---
@@ -167,7 +173,7 @@ create_symlink() {
                     rm -rf "$backup"
                 fi
                 echo -e "${Yellow}Backing up existing $target to $backup${Reset}"
-                    mv "$target" "$backup"
+                mv "$target" "$backup"
             else
                 echo -e "${Yellow}Removing existing $target without backup.${Reset}"
                 rm -rf "$target"
