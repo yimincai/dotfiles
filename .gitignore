@@ -123,9 +123,3 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# other plugins or settings from internet
-.tmux/plugins/
-kitty/kitty-themes/
-scripts/vpn.sh
-
