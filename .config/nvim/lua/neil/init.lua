@@ -1,5 +1,0 @@
-require("neil.set")
-require("neil.yank-highlight")
-require("neil.lazy")
-require("neil.utils")
-require("neil.remap")
