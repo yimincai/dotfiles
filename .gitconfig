@@ -1,6 +1,6 @@
 [user]
 	name = yimincai
-	email = formosaneko.tw@gmail.com
+    email = formosaneko.tw@gmail.com
 [alias]
     co = checkout
     br = branch
@@ -26,3 +26,5 @@
 	defaultBranch = main
 [credential]
 	helper = osxkeychain
+[pull]
+    rebase = true
