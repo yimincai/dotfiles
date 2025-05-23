@@ -56,6 +56,7 @@ return {
 					".tox",
 					"package-lock.json",
 					".DS_Store",
+					".git",
 				},
 				exclude = { ".gitlab-ci", ".env", ".gitignore", ".github" },
 			},
