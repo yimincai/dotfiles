@@ -72,7 +72,7 @@ yy() {
     rm -f -- "$tmp"
 }
 
-# alias 總整理
+# alias
 alias c="clear"
 alias ll="ls -lA"
 alias la="ls -a"
@@ -92,7 +92,7 @@ alias gg='~/scripts/kitty_remove_bg.sh'
 alias nbgr='~/scripts/kitty_bg_rand.sh'
 alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
 
-# conda 初始化 (miniforge)
+# conda init (miniforge)
 __conda_setup="$('/Users/neil/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -105,7 +105,7 @@ else
 fi
 unset __conda_setup
 
-# nvm
+# NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"

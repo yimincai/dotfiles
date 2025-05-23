@@ -45,8 +45,8 @@ end)
 vim.g.copilot_assume_mapped = true
 
 -- Clipboard
-vim.api.nvim_set_keymap("n", "<leader>y", '"+y<CR>', { noremap = true })
-vim.api.nvim_set_keymap("x", "<leader>y", '"+y<CR>', { noremap = true })
+-- vim.api.nvim_set_keymap("n", "<leader>y", '"+y<CR>', { noremap = true })
+-- vim.api.nvim_set_keymap("x", "<leader>y", '"+y<CR>', { noremap = true })
 
 -- Celluar Automaton
 vim.keymap.set("n", "<leader>wtf", ":CellularAutomaton make_it_rain<CR>")
