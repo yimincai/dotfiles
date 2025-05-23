@@ -1,6 +1,6 @@
 [user]
 	name = yimincai
-	email = bravc29229@gmail.com
+    email = formosaneko.tw@gmail.com
 [alias]
     co = checkout
     br = branch
@@ -26,3 +26,5 @@
 	defaultBranch = main
 [credential]
 	helper = /usr/lib/git-core/git-credential-libsecret
+[pull]
+    rebase = true
