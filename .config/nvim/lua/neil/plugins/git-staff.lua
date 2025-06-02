@@ -1,23 +1,35 @@
 return {
-	{
-		"tpope/vim-fugitive",
-		config = function()
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "fugitive",
-				callback = function()
-					vim.api.nvim_buf_set_keymap(0, "n", "<leader>p", ":Git push<CR>", { noremap = true, silent = true })
-				end,
-			})
-		end,
-	},
+	-- {
+	-- 	"tpope/vim-fugitive",
+	-- 	config = function()
+	-- 		vim.api.nvim_create_autocmd("FileType", {
+	-- 			pattern = "fugitive",
+	-- 			callback = function()
+	-- 				vim.api.nvim_buf_set_keymap(0, "n", "<leader>p", ":Git push<CR>", { noremap = true, silent = true })
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- },
 	{
 
-		"kdheepak/lazygit.nvim",
-		-- optional for floating window border decoration
+		"NeogitOrg/neogit",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
+			"nvim-lua/plenary.nvim", -- required
+			"sindrets/diffview.nvim", -- optional - Diff integration
+
+			-- Only one of these is needed.
+			"nvim-telescope/telescope.nvim", -- optional
+			"folke/snacks.nvim", -- optional
 		},
 	},
+	-- {
+	--
+	-- 	"kdheepak/lazygit.nvim",
+	-- 	-- optional for floating window border decoration
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- },
 	{
 		"lewis6991/gitsigns.nvim",
 		config = function()

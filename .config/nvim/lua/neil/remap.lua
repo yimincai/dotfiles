@@ -93,7 +93,10 @@ vim.api.nvim_set_keymap("n", "<leader>td", ":TodoTelescope<cr>", default_opts)
 vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
 
 -- Lazygit
-vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:LazyGit<cr>", default_silent_opts)
+-- vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:LazyGit<cr>", default_silent_opts)
+
+-- Neogit
+vim.api.nvim_set_keymap("n", "<leader>aa", ":Neogit kind=floating<CR>", default_silent_opts)
 
 -- Gitsigns
 vim.api.nvim_set_keymap("n", "<leader>hh", ":Gitsigns preview_hunk<CR>", default_silent_opts)
@@ -105,15 +108,15 @@ vim.api.nvim_set_keymap("n", "<leader>hd", ":vertical Gitsigns diffthis<CR>", de
 vim.api.nvim_set_keymap("n", "<leader>hD", ":Gitsigns diffthis<CR>", default_silent_opts)
 vim.api.nvim_set_keymap("n", "<leader>hb", ":Gitsigns blame<CR>", default_silent_opts)
 -- Fugitive
-vim.keymap.set("n", "<leader>gs", ":G status<CR>", default_silent_opts)
-vim.keymap.set("n", "<leader>gl", ":G log<CR>", default_silent_opts)
+-- vim.keymap.set("n", "<leader>gs", ":G status<CR>", default_silent_opts)
+-- vim.keymap.set("n", "<leader>gl", ":G log<CR>", default_silent_opts)
 -- vim.keymap.set("n", "<leader>gb", ":G blame<CR>", default_silent_opts)
-vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", default_silent_opts)
+-- vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", default_silent_opts)
 
 -- DiffView
 vim.keymap.set("n", "<leader>dv", ":DiffviewOpen<CR>", default_silent_opts)
 
--- testing
+-- Go testing
 vim.keymap.set("n", "<leader>tt", function()
 	if vim.bo.filetype == "go" then
 		vim.cmd("GoTestFile")

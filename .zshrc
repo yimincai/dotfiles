@@ -24,8 +24,8 @@ source $ZPLUG_HOME/init.zsh
 
 # 主題 (powerlevel10k)
 zplug romkatv/powerlevel10k, as:theme
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit $HOME/.p10k.zsh.
+[[ ! -f $HOME/p10k.zsh ]] || source $HOME/p10k.zsh
 
 # zplug 自我管理
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -53,7 +53,7 @@ fi
 zplug load
 
 # oh-my-zsh 主目錄（部分插件可能需要）
-export ZSH="/Users/neil/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # 主題設定 (影響 oh-my-zsh 核心組件)
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -97,25 +97,25 @@ alias fp="lsof -i"
 alias yd="youtubedr"
 alias t="tmux"
 alias cd="z"
-alias ts='~/scripts/tmux-sessionizer.sh'
-alias tc='~/scripts/tmux-choose-session.sh'
-alias vpn='~/scripts/vpn.sh'
+alias ts='$HOME/scripts/tmux-sessionizer.sh'
+alias tc='$HOME/scripts/tmux-choose-session.sh'
+alias vpn='$HOME/scripts/vpn.sh'
 alias zz='yazi'
-alias ok='~/scripts/kitty_socket.sh'
-alias sbg='~/scripts/kitty_set_bg.sh'
-alias gg='~/scripts/kitty_remove_bg.sh'
-alias nbgr='~/scripts/kitty_bg_rand.sh'
-alias nbg='~/scripts/kitty_set_nsfw_bg.sh'
+alias ok='$HOME/scripts/kitty_socket.sh'
+alias sbg='$HOME/scripts/kitty_set_bg.sh'
+alias gg='$HOME/scripts/kitty_remove_bg.sh'
+alias nbgr='$HOME/scripts/kitty_bg_rand.sh'
+alias nbg='$HOME/scripts/kitty_set_nsfw_bg.sh'
 
 # conda init (miniforge)
-__conda_setup="$('/Users/neil/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/neil/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/Users/neil/miniforge3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/neil/miniforge3/bin:$PATH"
+        export PATH="$HOME/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -139,10 +139,10 @@ export PATH="$PATH:$HOME/flutter/bin"
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
 # Java (Azul JDK 19)
-export JAVA_HOME=/Users/neil/Library/Java/JavaVirtualMachines/azul-19/Contents/Home
+export JAVA_HOME=$HOME/Library/Java/JavaVirtualMachines/azul-19/Contents/Home
 
 # Bun
-[ -s "/Users/neil/.bun/_bun" ] && source "/Users/neil/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
@@ -158,18 +158,18 @@ export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 
 # Google Cloud SDK PATH & Completion
-if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then
-    . '/Users/neil/google-cloud-sdk/path.zsh.inc'
+if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then
+    . '$HOME/google-cloud-sdk/path.zsh.inc'
 fi
-if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then
-    . '/Users/neil/google-cloud-sdk/completion.zsh.inc'
+if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then
+    . '$HOME/google-cloud-sdk/completion.zsh.inc'
 fi
 
 # zoxide (cd 替代工具)
 eval "$(zoxide init zsh)"
 
 # Docker CLI 補全
-fpath=(/Users/neil/.docker/completions $fpath)
+fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 
