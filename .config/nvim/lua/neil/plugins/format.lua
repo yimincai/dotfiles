@@ -20,7 +20,8 @@ return {
 					templ = { "templ" },
 					sh = { "shfmt" },
 					sql = { "sql_formatter" },
-					css = { "prettierd" },
+					css = { "prettierd", "prettier" },
+					html = { "prettierd", "prettier" },
 
 					-- Use the "*" filetype to run formatters on all filetypes.
 					["*"] = { "codespell" },

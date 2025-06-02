@@ -58,7 +58,17 @@ return {
 					".DS_Store",
 					".git",
 				},
-				exclude = { ".gitlab-ci", ".env", ".gitignore", ".github" },
+				exclude = {
+					".gitlab-ci",
+					".env",
+					".gitignore",
+					".github",
+					".gitmodules",
+					".gitkeep",
+					".gitconfig",
+					".gitlab-ci.yml",
+					"git-staff.lua",
+				},
 			},
 			actions = {
 				change_dir = {

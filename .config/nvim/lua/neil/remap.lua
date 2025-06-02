@@ -110,6 +110,9 @@ vim.keymap.set("n", "<leader>gl", ":G log<CR>", default_silent_opts)
 -- vim.keymap.set("n", "<leader>gb", ":G blame<CR>", default_silent_opts)
 vim.keymap.set("n", "<leader>gD", ":Gvdiffsplit<CR>", default_silent_opts)
 
+-- DiffView
+vim.keymap.set("n", "<leader>dv", ":DiffviewOpen<CR>", default_silent_opts)
+
 -- testing
 vim.keymap.set("n", "<leader>tt", function()
 	if vim.bo.filetype == "go" then

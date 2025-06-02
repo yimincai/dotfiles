@@ -32,7 +32,6 @@ files=(
     ".gitconfig"
     ".gitignore"
     ".tmux.conf"
-    ".tmux"   # This is a directory
     "scripts" # This is a directory
 )
 
@@ -46,7 +45,6 @@ files_in_config_folder_macOS=(
     ".config/skhd"
     ".config/yabai"
     ".config/ghostty"
-    ".config/hypr"
 )
 
 # Create symlink based on OS type
@@ -187,7 +185,7 @@ macOS_installation() {
 
 echo -e "${Blue}Starting dotfiles setup...${Reset}"
 create_symlink
-arch_installation
+macOS_installation
 echo -e "${Green}🎉 Dotfiles setup process complete! 🎉${Reset}"
 echo -e "${Yellow}Please restart your terminal or source your shell configuration (e.g., source ~/.zshrc) for changes to take effect.${Reset}"
 

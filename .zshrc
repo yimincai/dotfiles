@@ -1,3 +1,18 @@
+bindkey -v
+
+function vi-jk-escape() {
+  # Read the next key, with short timeout
+  read -t 0.15 -k 1 next
+  if [[ $next == "k" ]]; then
+    zle vi-cmd-mode
+  else
+    LBUFFER+="j$next"
+  fi
+}
+zle -N vi-jk-escape
+bindkey '^F' autosuggest-accept
+bindkey -M viins 'j' vi-jk-escape
+
 # 基本環境變數
 export TERM="xterm-256color"
 export EDITOR="nvim"
