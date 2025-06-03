@@ -25,7 +25,7 @@ source $ZPLUG_HOME/init.zsh
 # 主題 (powerlevel10k)
 zplug romkatv/powerlevel10k, as:theme
 # To customize prompt, run `p10k configure` or edit $HOME/.p10k.zsh.
-[[ ! -f $HOME/p10k.zsh ]] || source $HOME/p10k.zsh
+[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
 # zplug 自我管理
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -158,11 +158,11 @@ export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 
 # Google Cloud SDK PATH & Completion
-if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then
-    . '$HOME/google-cloud-sdk/path.zsh.inc'
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+    . "$HOME/google-cloud-sdk/path.zsh.inc"
 fi
-if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then
-    . '$HOME/google-cloud-sdk/completion.zsh.inc'
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+    . "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # zoxide (cd 替代工具)
