@@ -2,6 +2,8 @@
 
 # === Config ===
 SEARCH_DIRS=(
+    "${HOME}/Development"
+    "${HOME}/Development/personal"
     "${HOME}/Development/working/backend"
     "${HOME}/Development/working/app"
     "${HOME}/Development/working/cli"
@@ -10,22 +12,6 @@ SEARCH_DIRS=(
     "${HOME}/Development/devops/itracxing"
     "${HOME}/Development/devops/tools"
     "${HOME}/Development/side_projects"
-    "${HOME}/Development/testing"
-    "${HOME}/Development/clones"
-    "${HOME}/Development/personal"
-    "${HOME}/Development/learning/c"
-    "${HOME}/Development/learning/cpp"
-    "${HOME}/Development/learning/cpplayground"
-    "${HOME}/Development/learning/python"
-    "${HOME}/Development/learning/js"
-    "${HOME}/Development/learning/java"
-    "${HOME}/Development/learning/rust"
-    "${HOME}/Development/learning/golang"
-    "${HOME}/Development/learning/css"
-    "${HOME}/Development/learning/vue"
-    "${HOME}/Development/learning/react"
-    "${HOME}/Development/learning/flutter"
-    "${HOME}/Development/learning/video"
 )
 
 SESSIONIZER_LOG="${HOME}/scripts/tmux-sessionizer.log"
