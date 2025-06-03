@@ -28,6 +28,11 @@ vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", default_silent_opts)
 vim.api.nvim_set_keymap("n", "<C-n>", "<C-w>w", default_silent_opts)
 -- previous window
 vim.api.nvim_set_keymap("n", "<C-p>", "<C-w>p", default_silent_opts)
+-- nvim-tmux-navigator
+vim.api.nvim_set_keymap("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", default_silent_opts)
 
 -- Split window
 vim.api.nvim_set_keymap("n", "<leader>v", ":vsplit<CR>", default_silent_opts)
@@ -79,7 +84,7 @@ vim.keymap.set("n", "<leader>zm", function()
 	end
 end)
 
--- Telescoperema
+-- Telescope
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_opts)
 vim.api.nvim_set_keymap(
 	"n",
@@ -115,6 +120,10 @@ vim.api.nvim_set_keymap("n", "<leader>hb", ":Gitsigns blame<CR>", default_silent
 
 -- DiffView
 vim.keymap.set("n", "<leader>dv", ":DiffviewOpen<CR>", default_silent_opts)
+
+-- Quickfix List
+vim.keymap.set("n", "<C-J>", ":cnext<CR>") -- next quickfix item
+vim.keymap.set("n", "<C-K>", ":cprev<CR>") -- previous quickfix item
 
 -- Go testing
 vim.keymap.set("n", "<leader>tt", function()
