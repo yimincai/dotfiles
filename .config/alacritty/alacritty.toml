@@ -31,5 +31,5 @@ live_config_reload = true
 [keyboard]
 bindings = [
   # `Ctrl+F` to open tmux sessionizer, not working
-  # { key = "F", mods = "Control|Shift", command = { program = "zsh", args = [ "-c", "$HOME/scripts/tmux-sessionizer.sh"] } },
+  { key = "F", mods = "Control|Shift", command = { program = "alacritty", args = [ "-e", "zsh", "-ic", "~/scripts/tmux-sessionizer.sh" ] } },
 ]
