@@ -1,7 +1,7 @@
 return {
 	"nvim-tree/nvim-tree.lua",
 	dependencies = {
-		"nvim-tree/nvim-web-devicons", -- 可選，為文件圖標添加支持
+		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
 		require("nvim-tree").setup({

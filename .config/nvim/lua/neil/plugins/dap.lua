@@ -62,18 +62,6 @@ return {
 			end
 
 			vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "LspDiagnosticsSignError" })
-
-			-- Debugger keymaps
-			vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dapui').open()<CR>", { noremap = true })
-			vim.api.nvim_set_keymap("n", "<leader>ds", ":lua require('dapui').close()<CR>", { noremap = true })
-			vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
-			vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", { noremap = true })
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>dr",
-				":lua require('dapui').open({reset=true})<CR>",
-				{ noremap = true }
-			)
 		end,
 	},
 }

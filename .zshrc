@@ -13,6 +13,8 @@ zle -N vi-jk-escape
 bindkey '^F' autosuggest-accept
 bindkey -M viins 'j' vi-jk-escape
 
+export LC_TIME=en_US.UTF-8
+
 # 基本環境變數
 export TERM="xterm-256color"
 export EDITOR="nvim"

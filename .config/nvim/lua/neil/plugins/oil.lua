@@ -14,9 +14,6 @@ return {
 					show_hidden = true,
 				},
 			})
-
-			-- open parent directory in new floating window
-			vim.keymap.set("n", "<space>-", require("oil").toggle_float)
 		end,
 	},
 }

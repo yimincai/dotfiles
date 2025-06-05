@@ -1,4 +1,3 @@
-local default_opts = { noremap = true }
 local default_silent_opts = { noremap = true, silent = true }
 local notify = require("notify")
 
@@ -49,16 +48,9 @@ end)
 -- Copilot
 vim.g.copilot_assume_mapped = true
 
--- Clipboard
--- vim.api.nvim_set_keymap("n", "<leader>y", '"+y<CR>', { noremap = true })
--- vim.api.nvim_set_keymap("x", "<leader>y", '"+y<CR>', { noremap = true })
-
 -- Celluar Automaton
-vim.keymap.set("n", "<leader>wtf", ":CellularAutomaton make_it_rain<CR>")
-vim.keymap.set("n", "<leader>wtff", ":CellularAutomaton game_of_life<CR>")
-
--- Todo comment
-vim.keymap.set("n", "<leader>td", "<cmd>TodoTelescope<CR>")
+-- vim.keymap.set("n", "<leader>wtf", ":CellularAutomaton make_it_rain<CR>")
+-- vim.keymap.set("n", "<leader>wtff", ":CellularAutomaton game_of_life<CR>")
 
 -- Nvim tree
 vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true })
@@ -85,17 +77,19 @@ vim.keymap.set("n", "<leader>zm", function()
 end)
 
 -- Telescope
-vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_opts)
+vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files()<cr>", default_silent_opts)
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>as",
 	"<cmd>lua require'telescope.builtin'.buffers({ show_all_buffers = true })<cr>",
-	default_opts
+	default_silent_opts
 )
-vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.git_status()<cr>", default_opts)
-vim.api.nvim_set_keymap("n", "<leader>td", ":TodoTelescope<cr>", default_opts)
--- vim.api.nvim_set_keymap('n', '<leader>/', ":silent grep ", default_opts)
-vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua require'telescope.builtin'.live_grep()<cr>", default_opts)
+vim.api.nvim_set_keymap("n", "<leader>fg", ":Telescope git_status<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope git_bcommits<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<leader>td", ":TodoTelescope<cr>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<leader>ft", ":Telescope live_grep<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<leader>fh", ":Telescope help_tags<CR>", default_silent_opts)
+vim.api.nvim_set_keymap("n", "<leader>fm", ":Telescope man_pages<CR>", default_silent_opts)
 
 -- Lazygit
 -- vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:LazyGit<cr>", default_silent_opts)
@@ -112,6 +106,7 @@ vim.api.nvim_set_keymap("n", "<leader>hR", ":Gitsigns reset_buffer<CR>", default
 vim.api.nvim_set_keymap("n", "<leader>hd", ":vertical Gitsigns diffthis<CR>", default_silent_opts)
 vim.api.nvim_set_keymap("n", "<leader>hD", ":Gitsigns diffthis<CR>", default_silent_opts)
 vim.api.nvim_set_keymap("n", "<leader>hb", ":Gitsigns blame<CR>", default_silent_opts)
+
 -- Fugitive
 -- vim.keymap.set("n", "<leader>gs", ":G status<CR>", default_silent_opts)
 -- vim.keymap.set("n", "<leader>gl", ":G log<CR>", default_silent_opts)
@@ -122,8 +117,40 @@ vim.api.nvim_set_keymap("n", "<leader>hb", ":Gitsigns blame<CR>", default_silent
 vim.keymap.set("n", "<leader>dv", ":DiffviewOpen<CR>", default_silent_opts)
 
 -- Quickfix List
-vim.keymap.set("n", "<C-J>", ":cnext<CR>") -- next quickfix item
-vim.keymap.set("n", "<C-K>", ":cprev<CR>") -- previous quickfix item
+vim.keymap.set("n", "[c", ":cnext<CR>") -- next quickfix item
+vim.keymap.set("n", "]c", ":cprev<CR>") -- previous quickfix item
+
+-- Oil.nvim
+-- open parent directory in new floating window
+vim.keymap.set("n", "<space>-", require("oil").toggle_float)
+
+-- Undotree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+-- DAP
+-- Debugger keymaps
+vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dapui').open()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>ds", ":lua require('dapui').close()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset=true})<CR>", { noremap = true })
+
+-- Harpoon
+local harpoon = require("harpoon")
+vim.keymap.set("n", "<leader>a", function()
+	harpoon:list():add()
+end)
+vim.keymap.set("n", "<leader>fj", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+
+-- Toggle previous & next juffers stored within Harpoon list
+vim.keymap.set("n", "<leader>k", function()
+	harpoon:list():prev()
+end)
+vim.keymap.set("n", "<leader>j", function()
+	harpoon:list():next()
+end)
 
 -- Go testing
 vim.keymap.set("n", "<leader>tt", function()
